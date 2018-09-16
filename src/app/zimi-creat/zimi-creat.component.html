@@ -1,0 +1,39 @@
+ <div class="wrapper">
+<div class="nav">
+ <nav>
+  <a (click)="creatTianzi('')">Zimicreat</a>
+  <a (click)="getTianzilist('tmp')">tmp</a> 
+  <a (click)="getTianzilist('http')">Http</a> 
+</nav>
+</div>
+
+<div class="list"><app-tianzi-list [tianzis]="tianzis" (selectTianzi)="selectTianzi($event)"></app-tianzi-list></div>
+
+<div class="grids">
+<app-zimi-grids [grids]="grids" [canChange]="canChange" [selectedGrids]="selectedGrids" (selectGrid)="setZimis($event)" (selectZimi)="selectZimiindex($event)"></app-zimi-grids>
+</div>
+
+<div class="butt">
+	<div *ngIf="source==''"><button (click)="add()">add</button>
+	<button (click)="cleanGrid()">cancle</button>
+    </div>
+   <div *ngIf="source=='tmp'">
+    <button (click)="save()">save</button>
+	<button (click)="cleanZimi()">cleanZimi</button>
+    <button (click)="delete()">delete</button>
+    <button (click)="update()">update</button>		
+   </div>
+   <div *ngIf="source=='http'">
+    <button (click)="back()">back</button>	
+   </div>
+</div>
+
+<div class="zimi">
+<app-zimi-list [zimis]="zimis" (selectZimi)="selectZimi($event)"></app-zimi-list>
+</div>
+
+<div class="detail">
+<app-zimi-detail *ngIf="!canChange" [zimi]="selectedZimi" (changeGrid)="updataGrid($event)"></app-zimi-detail>
+</div>
+
+</div>

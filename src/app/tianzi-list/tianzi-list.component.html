@@ -1,0 +1,6 @@
+<h2>My Heroes</h2>
+<ul class="zimis">
+  <li *ngFor="let tianzi of tianzis" (click)="onSelect(tianzi.zimi_id)">
+    <span class="badge">{{tianzi.zimi_id}}</span>
+  </li>
+</ul>

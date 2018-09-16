@@ -1,0 +1,38 @@
+.grid{
+  display: grid;
+  grid-template-columns: repeat(10,35px);
+  grid-template-rows:repeat(10,35px);
+  grid-column-gap: 1px;
+  grid-row-gap: 1px;
+  outline-color: black;
+  outline-width:1px;
+  outline-style: solid ;
+}
+.grid-pad {
+
+background-color: black;
+}
+
+
+.module {
+  display: flex;
+  justify-content:center;
+  align-items:center;
+  color: #eee;
+  height: 35px;
+  width: 35px;
+  background-color: #607D8B;
+
+
+} 
+.module_be {
+  background-color: #EEE;
+  cursor: pointer;
+  color: #607d8b;
+}
+.module_selected {
+  background-color: #EEc;
+  cursor: pointer;
+  color: #607d8b;
+}
+

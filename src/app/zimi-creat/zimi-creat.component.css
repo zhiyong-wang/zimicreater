@@ -1,0 +1,54 @@
+/* zimisComponent's private CSS styles */
+.wrapper {
+    display: grid;
+    grid-template-columns: 300px 360px 600px;
+    grid-template-rows: 50px 370px 35px  100px
+}
+.nav{
+  grid-column: 1 / 4;
+}
+.list{
+  grid-row-start: 2;
+  grid-row-end: 5;
+
+}
+.grids{ 
+  grid-row-start: 2;
+  grid-row-end: 3;
+
+}
+.butt{
+  grid-row-start: 3;
+  grid-row-end: 4;
+}
+
+.detail{ 
+  grid-row-start: 4;
+  grid-row-end: 5;
+}
+
+.zimi{ 
+  grid-row-start: 2;
+  grid-row-end: 5;
+}
+
+
+nav a {
+  padding: 5px 10px;
+  text-decoration: none;
+  margin-top: 10px;
+  display: inline-block;
+  background-color: #eee;
+  border-radius: 4px;
+}
+nav a:visited, a:link {
+  color: #607D8B;
+}
+nav a:hover {
+  color: #039be5;
+  background-color: #CFD8DC;
+}
+nav a.active {
+  color: #039be5;
+}
+

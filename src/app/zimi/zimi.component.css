@@ -1,0 +1,6 @@
+/* zimisComponent's private CSS styles */
+.box{
+	width: 500px;
+	display: flex;
+	 justify-content:space-between;
+}

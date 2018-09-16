@@ -1,0 +1,49 @@
+.zimis {
+  margin:0 0px  0  8px;
+  list-style-type: none;
+  padding:0 8px  0  8px;
+  width: 200px;
+  height: 270px;
+
+  font-size:small;
+
+}
+.zimis li {
+  cursor: pointer;
+  position: relative;
+  left: 0;
+  background-color: #EEE;
+  margin: 3px;
+  padding: 3px 0;
+  height: 15px;
+  border-radius: 4px;
+}
+.zimis li.selected:hover {
+  background-color: #BBD8DC !important;
+  color: white;
+}
+.zimis li:hover {
+  color: #607D8B;
+  background-color: #DDD;
+  left: 2px;
+}
+.zimis .text {
+  position: relative;
+
+}
+.zimis .badge {
+  display: inline-block;
+  font-size: small;
+  color: white;
+  padding: 0px 0px 0 4px;
+  background-color: #607D8B;
+  width:20px;
+  position: relative;
+  left: -1px;
+  top: -3px;
+  height: 20px;
+  margin-right: 2px;
+  border-radius: 4px 0 0 4px;
+ justify:center;
+  align:center;
+}
