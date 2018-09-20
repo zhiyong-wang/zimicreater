@@ -13,7 +13,8 @@ import { TianziListComponent } from './tianzi-list/tianzi-list.component';
   imports: [
     CommonModule,
     FormsModule, 
-    HttpClientModule,    
+    HttpClientModule,  
+      
   ],
   declarations: [
     ZimiDetailComponent,

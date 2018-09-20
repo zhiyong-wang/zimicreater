@@ -7,6 +7,7 @@ import { AppRotingModule } from './app-roting.module';
 
 import { AppComponent } from './app.component';
 import {TianziCreaterModule } from './tianzi-creater/tianzi-creater.module'
+import {QuestionsModule } from './questions/questions.module'
 
 
 
@@ -19,9 +20,10 @@ import {TianziCreaterModule } from './tianzi-creater/tianzi-creater.module'
   imports: [
     BrowserModule,
     FormsModule, 
-    HttpClientModule,
+    HttpClientModule, 
+    QuestionsModule,
+    TianziCreaterModule,    
     AppRotingModule,
-    TianziCreaterModule,
   ],
   providers: [
 

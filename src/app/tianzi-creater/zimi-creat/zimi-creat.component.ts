@@ -20,9 +20,9 @@ export class ZimiCreatComponent implements OnInit {
    //从服务处取得字谜列表，分别为横向字谜，纵向字谜，和网格词组 
    source:string=""
    
-   selectedZimi: Zimi;
+   selectedZimi: Zimi;    
 
-  //点击zimi-listd选择当前字谜
+  //点击zimi-listd选择当前字谜进行编辑
   selectZimi(zimi: Zimi){
       this.selectedZimi = zimi;
       this.selectedGrids=[]
@@ -45,7 +45,7 @@ export class ZimiCreatComponent implements OnInit {
       	this.selectZimi(this.zimis[1][i-this.zimis[0].length])
       }	
     }
-   //设置grid同时改变字谜数组
+   //设置grid同时改变字谜模板
    setZimis(grid:Grid){
 
       if (grid.value!=null){
