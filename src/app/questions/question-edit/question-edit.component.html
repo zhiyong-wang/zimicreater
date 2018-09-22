@@ -1,3 +1,33 @@
 <p>
-  question-edit works!
+  {{wordItem.Midi}}
 </p>
+
+<div>
+<form>
+
+	<div>
+	    <label>词条: 
+	      <input #box  [(ngModel)]="wordItem.Midi"  (keyup.enter)="onKey(box.value)"  (blur)="onKey(box.value)" name="Midi">
+	    </label>
+	</div>
+     <div><span>  {{errer_message}}</span></div>
+	<div>
+	    <label>问题:
+	      <input [(ngModel)]="wordItem.Question" placeholder="question" name="Question">
+	    </label>
+	</div>
+	<div>
+	    <label>答案:
+	      <input [(ngModel)]="wordItem.Answer" placeholder="answer" name="Answer">
+	    </label>
+	</div>
+	<div>
+	    <label>标签:
+	      <input [(ngModel)]="wordItem.Tags" placeholder="answer" name="Tags">
+	    </label>
+	</div>
+
+     <div *ngIf="true"><button (click)="add()">add</button></div>
+		
+</form>
+</div>

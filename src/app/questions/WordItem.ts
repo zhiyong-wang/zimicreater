@@ -1,4 +1,4 @@
-export class Question {
+export class WordItem {
   Question_ID: number;
   Midi:string;
   Question: string;
