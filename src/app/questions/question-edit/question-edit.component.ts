@@ -11,23 +11,25 @@ import { WordItem } from '../WordItem';
 export class QuestionEditComponent implements OnInit {
 
 
-  errer_message:string='aa';
+  errer_message:string='';  
+  wordItem:WordItem={Question_ID:-1,Midi:'000',Question:'',Answer:''};
+  thismessage:string="null"
   
-  wordItem:WordItem
+  add(): void {      
+  	   if(this.wordItem.Midi&&this.wordItem.Question&&this.wordItem.Answer){
+          // this.service.addWordItem(this.wordItem);
+          this.thismessage="It is ok"
+        }
+        else{
+          this.errer_message='项目填全'
+        } 
 
-  
-  add(item: WordItem){
-  	// item.Midi=item.Midi.replace(/\s+/g," ")                                    
-  //	 item.Question=Qtem.question.replace(/\s+/g," ")
-   //  item.Answer=item.Answer.replace(/\s+/g," ")
-  	//if(item.Midi&item.Question&item.Answer){
-        //this.service.addWordItem(item);
-      // }
-  //  else{
-   //  	this.errer_message='项目填全'
-    //    } 
-    };
-   onKey(value:string):void{}
+   };
+   onKey():void{
+       this.wordItem.Midi=this.wordItem.Midi.replace(/\s+/g,'')                                    
+       this.wordItem.Question=this.wordItem.Question.replace(/\s+/g,'')
+       this.wordItem.Answer= this.wordItem.Answer.replace(/\s+/g,'')
+     }
 
   constructor(
 
@@ -38,6 +40,6 @@ export class QuestionEditComponent implements OnInit {
     {}
 
   ngOnInit() {    
-   this.wordItem={Question:'',Answer:'',Midi:'000'};
 
+}
 }

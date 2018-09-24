@@ -1,5 +1,5 @@
 <p>
-  {{wordItem.Midi}}
+  {{thismessage}}
 </p>
 
 <div>
@@ -7,18 +7,25 @@
 
 	<div>
 	    <label>词条: 
-	      <input #box  [(ngModel)]="wordItem.Midi"  (keyup.enter)="onKey(box.value)"  (blur)="onKey(box.value)" name="Midi">
-	    </label>
+	      <input #box  [(ngModel)]="wordItem.Midi"  (keyup.enter)="onKey()"  (blur)="onKey()" name="Midi" required minlength="2"   #name="ngModel"  >
+    </label>
+     <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+	  <div *ngIf="name.errors.required">
+	   Midi is required.
+	  </div>{{wordItem.Midi}}
+	  <div *ngIf="name.errors.minlength">
+	    Midi must be at least 2 characters long.
+	  </div>
 	</div>
-     <div><span>  {{errer_message}}</span></div>
+	</div>
 	<div>
 	    <label>问题:
-	      <input [(ngModel)]="wordItem.Question" placeholder="question" name="Question">
+	      <input [(ngModel)]="wordItem.Question" placeholder="question" name="Question" (keyup.enter)="onKey()"  (blur)="onKey()">
 	    </label>
-	</div>
+	</div>{{wordItem.Question}}
 	<div>
 	    <label>答案:
-	      <input [(ngModel)]="wordItem.Answer" placeholder="answer" name="Answer">
+	      <input [(ngModel)]="wordItem.Answer" placeholder="answer" name="Answer" (keyup.enter)="onKey()"  (blur)="onKey()">
 	    </label>
 	</div>
 	<div>
@@ -27,7 +34,8 @@
 	    </label>
 	</div>
 
-     <div *ngIf="true"><button (click)="add()">add</button></div>
-		
+     <div ><button (click)="add()">add</button></div>
+	
+
 </form>
 </div>

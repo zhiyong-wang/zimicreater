@@ -14,7 +14,7 @@ export class ZimiDetailComponent implements OnInit {
 
 
   onKey(value: string){
-  	let thisvalue=value.replace(/\s+/g," ")
+  	let thisvalue=value.replace(/\s+/g,'')
   	if(thisvalue.length==this.zimi.midi_length){
         this.changeGrid.emit(thisvalue);
         this.errer_message=''
