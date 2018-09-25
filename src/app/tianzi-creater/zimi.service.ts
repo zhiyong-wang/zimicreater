@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import { Observable } from 'rxjs';
+import { of } from 'rxjs';
 
 
 import { Zimi } from './zimi';
@@ -170,7 +170,7 @@ export class ZimiService {
         let Url="http://localhost:5757/weapp/tianzi_add"
   		let addzimis={"source":source,"zimi":zimis}
   		return this.http.post<{}>(Url, addzimis, httpOptions).pipe(
-        catchError(this.handleError<Zimi>('addZimi'))
+        catchError(this.handleError<Zimi>('addZimi error'))
  	 );
 
 	}
