@@ -17,12 +17,10 @@ const questionsRoutes: Routes = [
         path: '',
         component: QuestionListComponent,
         children: [
-          {
-            path: ':id',
+          { path: ':id',
             component:QuestionEditComponent
           },
-          {
-            path: '',
+          { path: '',
             component: QuestionEditComponent
           }
         ]
