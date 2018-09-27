@@ -21,16 +21,23 @@ export class QuestionService {
   private httpsUrl = 'http://localhost:5757/weapp/tianzi';
   
  	addwordItem (wordItem:WordItem): Observable<{}> {
-        let Url="http://localhost:5757/weapp/question_add"
+      let Url="http://localhost:5757/weapp/question_add"
   		return this.http.post<{}>(Url, wordItem, httpOptions).pipe(
         catchError(this.handleError<WordItem>('addWordItem'))
  	 );
+   }
 
-	}
+
+  getwordItems():Observable<any[]> {
+      let Url="http://localhost:5757/weapp/question_list"
+      return this.http.get<any[]>(Url)
+    
+    }
+
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
  
- 
+
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
  
