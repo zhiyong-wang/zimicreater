@@ -1,4 +1,13 @@
-<p>
-  question-list works!
-</p>
+
+<h2>{{message}}</h2>
+<ul class="">
+  <li *ngFor="let wordItem of wordItems" (click)="onSelect(wordItem)">
+    <span class="badge">{{wordItem.midi}}</span>
+    <span class="badge">{{wordItem.question}}</span>
+     <span class="badge">{{wordItem.answer}}</span>
+  </li>
+</ul>
+
+
+
 <router-outlet></router-outlet>

@@ -1,15 +1,37 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { WordItem } from '../WordItem';
+import { QuestionService } from '../question.service'
 @Component({
   selector: 'app-question-list',
   templateUrl: './question-list.component.html',
   styleUrls: ['./question-list.component.css']
 })
 export class QuestionListComponent implements OnInit {
+   message:string='null';
+   wordItems: WordItem[];
+   wordItem:WordItem;
 
-  constructor() { }
+   getwordItems():void{
+	  this.service.getwordItems().subscribe(questions=>{
+      this.wordItems=questions["data"];
+       this.message='okkk';
+     })
+
+
+}
+
+  constructor(
+    private route:ActivatedRoute,
+    private router:Router,
+    private service: QuestionService)
+  {}
 
   ngOnInit() {
+  	this.getwordItems()
+  	
   }
 
 }
