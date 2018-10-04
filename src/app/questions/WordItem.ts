@@ -1,5 +1,6 @@
 export class WordItem {
-  Midi:string;
-  Question: string;
-  Answer:string;
+  question_id:number;
+  midi:string;
+  question: string;
+  answer:string;
 }

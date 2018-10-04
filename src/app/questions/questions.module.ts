@@ -8,7 +8,6 @@ import { QuestionListComponent } from './question-list/question-list.component';
 import { TagsComponent } from './tags/tags.component';
 import { QuestionsRoutingModule} from './questions.routing';
 
-
 @NgModule({
   imports: [
     CommonModule,
@@ -19,6 +18,10 @@ import { QuestionsRoutingModule} from './questions.routing';
   QuestionsComponent,
   QuestionEditComponent, 
   QuestionListComponent, 
-  TagsComponent]
+  TagsComponent],
+  providers: [
+
+  ],
+  
 })
 export class QuestionsModule { }

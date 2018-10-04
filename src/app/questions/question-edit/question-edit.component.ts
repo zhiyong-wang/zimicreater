@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Observable,of,from} from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { WordItem } from '../WordItem';
 import { QuestionService } from '../question.service'
@@ -12,42 +13,46 @@ export class QuestionEditComponent implements OnInit {
 
 
   errer_message:string='';  
-  wordItem:WordItem={Midi:'000',Question:'',Answer:''};
-  thismessage:string="null"
- 
-
+  wordItem$:Observable<WordItem>;
+  wordItem:WordItem={question_id:-1,midi:'',question:'',answer:''};
+  selectedId:string;
+  id:number;
   onKey():void{
-       this.wordItem.Midi=this.wordItem.Midi.replace(/\s+/g,'')                                    
-       this.wordItem.Question=this.wordItem.Question.replace(/\s+/g,'')
-       this.wordItem.Answer= this.wordItem.Answer.replace(/\s+/g,'')
+       this.wordItem.midi=this.wordItem.midi.replace(/\s+/g,'')                                    
+       this.wordItem.question=this.wordItem.question.replace(/\s+/g,'')
+       this.wordItem.answer= this.wordItem.answer.replace(/\s+/g,'')
      }
   add(): void {      
-  	   if(this.wordItem.Midi&&this.wordItem.Question&&this.wordItem.Answer){
+  	   if(this.wordItem.midi&&this.wordItem.question&&this.wordItem.answer){
           this.service.addwordItem(this.wordItem)
              .subscribe(()=>{this.cleanwordItem()});
-          this.thismessage="It is ok"
         }
         else{
           this.errer_message='项目填全'
         } 
 
    };
+
+
    cleanwordItem(): void {
-     this.wordItem={Midi:'',Question:'',Answer:''}; 
+     this.wordItem={question_id:-1,midi:'',question:'',answer:''}; 
    }
-
-
-
-
   constructor(
-
     private route:ActivatedRoute,
     private router:Router,
     private service: QuestionService
    )  
     {}
-
-  ngOnInit() {    
-
+ ngOnInit() {
+    this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>{
+      this.selectedId=params.get('id')
+      if(this.selectedId){return this.service.getwordItem(this.selectedId)}
+      else{return of({'data':{ question_id:-1,midi:'qqq',question:'',answer:''}})}
+       }        
+     )).subscribe(q=>this.wordItem=q['data']); 
+     
+   } 
+     
 }
-}
+

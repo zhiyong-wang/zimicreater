@@ -1,10 +1,11 @@
 import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { QuestionsComponent }   from './questions.component';
+import { QuestionsComponent }           from './questions.component';
 import { QuestionListComponent }        from './question-list/question-list.component';
 import { QuestionEditComponent }        from './question-edit/question-edit.component';
 import { TagsComponent }                from './tags/tags.component';
+
 
 const questionsRoutes: Routes = [
   {
@@ -14,15 +15,15 @@ const questionsRoutes: Routes = [
       {path:'tags',component:TagsComponent,
       },
       {
-        path: '',
+        path: 'wordItems',
         component: QuestionListComponent,
         children: [
           { path: ':id',
-            component:QuestionEditComponent
+            component:QuestionEditComponent,
           },
           { path: '',
-            component: QuestionEditComponent
-          }
+            component:QuestionEditComponent,
+          },
         ]
       }
     ]

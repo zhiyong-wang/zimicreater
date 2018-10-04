@@ -1,36 +1,35 @@
-<p>
-  {{thismessage}}
+<p>edit
 </p>
 
-<div>
+<div *ngIf="wordItem">
 <form>
 
 	<div>
 	    <label>词条: 
-	      <input #box  [(ngModel)]="wordItem.Midi"  (keyup.enter)="onKey()"  (blur)="onKey()" name="Midi" required minlength="2"   #name="ngModel"  >
+	      <input #box  [(ngModel)]="wordItem.midi"  (keyup.enter)="onKey()"  (blur)="onKey()" name="midi" required minlength="2"   #midi="ngModel"  >
     </label>
-     <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
-	  <div *ngIf="name.errors.required">
-	   Midi is required.
-	  </div>{{wordItem.Midi}}
+     <div *ngIf="midi.invalid && (midi.dirty || midi.touched)" class="alert alert-danger">
+	  <div *ngIf="midi.errors.required">
+	   midi is required.
+	  </div>{{wordItem.midi}}
 	  <div *ngIf="name.errors.minlength">
-	    Midi must be at least 2 characters long.
+	    midi must be at least 2 characters long.
 	  </div>
 	</div>
 	</div>
 	<div>
 	    <label>问题:
-	      <input [(ngModel)]="wordItem.Question" placeholder="question" name="Question" (keyup.enter)="onKey()"  (blur)="onKey()">
+	      <input [(ngModel)]="wordItem.question" placeholder="question" name="question" (keyup.enter)="onKey()"  (blur)="onKey()">
 	    </label>
-	</div>{{wordItem.Question}}
+	</div>{{wordItem.question}}
 	<div>
 	    <label>答案:
-	      <input [(ngModel)]="wordItem.Answer" placeholder="answer" name="Answer" (keyup.enter)="onKey()"  (blur)="onKey()">
+	      <input [(ngModel)]="wordItem.answer" placeholder="answer" name="answer" (keyup.enter)="onKey()"  (blur)="onKey()">
 	    </label>
 	</div>
 	<div>
 	    <label>标签:
-	      <input [(ngModel)]="wordItem.Tags" placeholder="answer" name="Tags">
+	      <input [(ngModel)]="wordItem.Tags" placeholder="ansewer" name="Tags">
 	    </label>
 	</div>
 

@@ -34,6 +34,13 @@ export class QuestionService {
     
     }
 
+  getwordItem(id:number|string):Observable<any>{
+    let tUrl= "http://localhost:5757/weapp/question"
+    let Url=`${tUrl}/${id}`
+      return this.http.get<any>(Url)
+    
+    }
+
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
  
