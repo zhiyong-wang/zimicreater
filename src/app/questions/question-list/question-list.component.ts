@@ -10,17 +10,14 @@ import { QuestionService } from '../question.service'
   styleUrls: ['./question-list.component.css']
 })
 export class QuestionListComponent implements OnInit {
-   message:string='null';
    wordItems: WordItem[];
    wordItem:WordItem;
 
    getwordItems():void{
 	  this.service.getwordItems().subscribe(questions=>{
       this.wordItems=questions["data"];
-       this.message='okkk';
      })
-
-
+ 
 }
 
   constructor(

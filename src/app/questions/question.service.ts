@@ -3,14 +3,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { of } from 'rxjs';
-import { WordItem} from './WordItem'
+import { WordItem} from './WordItem';
+import { Tag} from './WordItem'
 
 const httpOptions = {
 	  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 	};
 
 const httpOptions1 = {
-	  headers: new HttpHeaders({ 'Content-Type': 'string' })
+	  headers: new HttpHeaders({ 'Content-Type': 'text/plain' })
 	};
 
 @Injectable({
@@ -40,6 +41,27 @@ export class QuestionService {
       return this.http.get<any>(Url)
     
     }
+
+   addtag (tag:Tag): Observable<{}> {
+      let Url="http://localhost:5757/weapp/tag_add"
+      return this.http.post(Url, tag, httpOptions).pipe(
+        catchError(this.handleError<string>('addtag'))
+    );
+   }
+
+   deletetag(tag:Tag):Observable<{}> {
+
+      let Url="http://localhost:5757/weapp/tag_delete"
+      return this.http.post<{}>(Url, tag, httpOptions).pipe(
+        catchError(this.handleError<string>('deleteTag'))
+    );
+}
+
+   gettags():Observable<string[]>{
+      let Url= "http://localhost:5757/weapp/tags_list"
+      return this.http.get<any>(Url)
+
+   } 
 
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

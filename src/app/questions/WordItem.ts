@@ -4,3 +4,8 @@ export class WordItem {
   question: string;
   answer:string;
 }
+
+export class Tag {
+  tag_id:number;
+  tag_title:string;
+}

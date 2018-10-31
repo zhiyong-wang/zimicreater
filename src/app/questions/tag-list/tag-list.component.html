@@ -1,0 +1,13 @@
+<div *ngIf="tags">
+	
+<ul class="">
+  <li *ngFor="let tag of tags" 
+    [class.selected]="tag.id === selectedId"
+    (click)="onSelect(tag)">
+
+
+    <span class="badge">{{tag.tag_id}}</span>
+    <span class="badge">{{tag.tag_title}}</span>
+  </li>
+</ul>
+</div>

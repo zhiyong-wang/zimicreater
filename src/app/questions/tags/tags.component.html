@@ -1,3 +1,23 @@
-<p>
-  tags works!
+<p>tags
 </p>
+
+<form>
+
+	<div>
+	    <label>标签: 
+	      <input  [(ngModel)]="tag.tag_title"  (keyup.enter)="onKey()"  (blur)="onKey()" name="tag"   >
+    </label>
+
+	</div>
+   
+   
+ 	<div *ngIf="selectedTag"><button (click)="delete()">delete</button></div>
+    <div *ngIf="selectedTag==null"><button (click)="add()">add</button></div>
+    <div ><button (click)="cancel()">cancel</button></div>
+</form>
+
+
+<div class="">
+<app-tag-list (selectTag)="selectTag($event)"></app-tag-list>
+</div>
+

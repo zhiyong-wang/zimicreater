@@ -7,6 +7,7 @@ import { QuestionEditComponent } from './question-edit/question-edit.component';
 import { QuestionListComponent } from './question-list/question-list.component';
 import { TagsComponent } from './tags/tags.component';
 import { QuestionsRoutingModule} from './questions.routing';
+import { TagListComponent } from './tag-list/tag-list.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { QuestionsRoutingModule} from './questions.routing';
   QuestionsComponent,
   QuestionEditComponent, 
   QuestionListComponent, 
-  TagsComponent],
+  TagsComponent, 
+  TagListComponent],
   providers: [
 
   ],

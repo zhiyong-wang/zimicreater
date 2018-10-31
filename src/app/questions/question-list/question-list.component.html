@@ -1,5 +1,5 @@
 
-<h2>{{message}}</h2>
+<h2>questions list</h2>
  <a [routerLink]="['../wordItems']">add a new wordItem</a>
 <ul class="">
   <li *ngFor="let wordItem of wordItems" [class.selected]="wordItem.id === selectedId">
