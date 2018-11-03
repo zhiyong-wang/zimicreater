@@ -20,6 +20,7 @@ export class QuestionListComponent implements OnInit {
  
 }
 
+
   constructor(
     private route:ActivatedRoute,
     private router:Router,

@@ -3,6 +3,7 @@ export class WordItem {
   midi:string;
   question: string;
   answer:string;
+  tags:string;
 }
 
 export class Tag {

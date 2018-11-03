@@ -29,10 +29,18 @@
 	</div>
 	<div>
 	    <label>标签:
-	      <input [(ngModel)]="wordItem.Tags" placeholder="ansewer" name="Tags">
+	      <ul class="" *ngIf=selectedTags>
+
+  <li *ngFor="let tag of selectedTags" >     
+    <span class="badge" (click)="unselectTag(tag)">{{tag.tag_title}}</span>    
+  </li>
+</ul>
+
 	    </label>
 	</div>
-
+		<div class="">
+		<app-tag-list (selectTag)="selectTag($event)"></app-tag-list>
+		</div>
      <div ><button (click)="add()">add</button></div>
 	
 
