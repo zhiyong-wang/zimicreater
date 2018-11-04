@@ -30,7 +30,7 @@ export class QuestionEditComponent implements OnInit {
        this.wordItem.tags=""  
        if (this.selectedTags.length>0){
          for (let tag of this.selectedTags){
-               this.wordItem.tags=this.wordItem.tags.concat(String(tag.tag_id))  
+               this.wordItem.tags=this.wordItem.tags+(String(tag.tag_id)) +',' 
            }
        }          
   	   if(this.wordItem.midi&&this.wordItem.question&&this.wordItem.answer){
@@ -40,8 +40,23 @@ export class QuestionEditComponent implements OnInit {
         else{
           this.errer_message='项目填全'
         } 
-
    };
+
+   modify():void{       
+       this.wordItem.tags=""  
+       if (this.selectedTags.length>0){
+         for (let tag of this.selectedTags){
+               this.wordItem.tags=this.wordItem.tags+(String(tag.tag_id)) +',' 
+           }
+       }          
+       if(this.wordItem.midi&&this.wordItem.question&&this.wordItem.answer){
+          this.service.modifywordItem(this.wordItem)
+             .subscribe(()=>{this.cleanwordItem()});
+        }
+        else{
+          this.errer_message='项目填全'
+        } 
+   }
 
   selectTag(tag:Tag):void{
     if (this.selectedTags.find((t)=>t.tag_id==tag.tag_id)){}

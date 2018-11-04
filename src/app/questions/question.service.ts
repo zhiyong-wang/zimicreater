@@ -27,7 +27,12 @@ export class QuestionService {
         catchError(this.handleError<WordItem>('addWordItem'))
  	 );
    }
-
+   modifywordItem (wordItem:WordItem): Observable<{}> {
+      let Url="http://localhost:5757/weapp/question"
+      return this.http.post<{}>(Url, wordItem, httpOptions).pipe(
+        catchError(this.handleError<WordItem>('addWordItem'))
+    );
+   }
 
   getwordItems():Observable<any[]> {
       let Url="http://localhost:5757/weapp/question_list"
