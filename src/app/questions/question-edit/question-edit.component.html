@@ -42,7 +42,7 @@
 		<app-tag-list (selectTag)="selectTag($event)"></app-tag-list>
 		</div>
      <div *ngIf="wordItem.question_id==-1"><button (click)="add()">add</button></div>
-	 <div *ngIf="wordItem.question_id>=0"><button (click)="modify()">modify</button></div>
+	 <div *ngIf="wordItem.question_id>=0"><button (click)="modify()">modify</button><button (click)="delete()">delete</button></div>
 	
 
 </form>

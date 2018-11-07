@@ -15,13 +15,12 @@ export class TagsComponent implements OnInit {
   errer_message:string=''; 
   selectedTag:Tag=null;
 
-  @Input() selectId:string
 
   onKey():void{
        this.tag.tag_title=this.tag.tag_title.replace(/\s+/g,'')                                    
      }
   
-  selectTag(tag:Tag):void{
+  selectTag1(tag:Tag):void{
   	this.selectedTag=tag
   	this.tag=tag
   }

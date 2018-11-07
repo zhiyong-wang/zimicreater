@@ -57,6 +57,11 @@ export class QuestionEditComponent implements OnInit {
           this.errer_message='项目填全'
         } 
    }
+   delete():void{
+       this.service.deletewordItem(this.wordItem)
+             .subscribe(()=>{this.cleanwordItem()});
+
+   }
 
   selectTag(tag:Tag):void{
     if (this.selectedTags.find((t)=>t.tag_id==tag.tag_id)){}
@@ -69,7 +74,7 @@ export class QuestionEditComponent implements OnInit {
   }
 
    cleanwordItem(): void {
-     this.wordItem={question_id:-1,midi:'',question:'',answer:'',tags:null}; 
+       location.href="../questions/wordItems/"; 
    }
 
    setSelectedTag():void{

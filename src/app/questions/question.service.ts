@@ -34,6 +34,15 @@ export class QuestionService {
     );
    }
 
+  deletewordItem(wordItem:WordItem):Observable<{}> {
+
+      let Url="http://localhost:5757/weapp/question_delete"
+      return this.http.post<{}>(Url, wordItem, httpOptions).pipe(
+        catchError(this.handleError<string>('deletewordItem'))
+    );
+}
+
+
   getwordItems():Observable<any[]> {
       let Url="http://localhost:5757/weapp/question_list"
       return this.http.get<any[]>(Url)
