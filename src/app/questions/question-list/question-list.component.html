@@ -1,17 +1,30 @@
 
-<h2>questions list</h2>
- <a [routerLink]="['../wordItems']">add a new wordItem</a>
-<ul class="">
-  <li *ngFor="let wordItem of wordItems" [class.selected]="wordItem.id === selectedId">
+
+
+
+
+
+ <nz-layout style="padding:24px 0; background: #fff">
+       
+
+        <nz-sider [nzWidth]="400" style="background:#fff">
+
+        	<a [routerLink]="['../wordItems']">add a new wordItem</a>   
+            <ul nz-menu [nzMode]="'inline'" style="height:100%">
+              <li nz-menu-item  *ngFor="let wordItem of wordItems" [class.selected]="wordItem.id === selectedId">
       <a [routerLink]="[wordItem.question_id]">
-    <span class="badge">{{wordItem.question_id}}</span>
-    <span class="badge">{{wordItem.midi}}</span>
-    <span class="badge">{{wordItem.question}}</span>
-     <span class="badge">{{wordItem.answer}}</span>
- </a>
-  </li>
-</ul>
+			<span  title><i nz-icon type="user"></i></span>
+			<span  title>{{wordItem.question_id}}</span>
+			<span  title>{{wordItem.midi}}</span>
+			<span  title>{{wordItem.question}}</span>
+			<span  title>{{wordItem.answer}}</span>  </a>           
 
+             </li>
+            </ul>
+          </nz-sider>     
 
+          <nz-content style="background:#fff; padding: 24px; min-height: 280px;">
+          	<router-outlet></router-outlet>
+          </nz-content>
 
-<router-outlet></router-outlet>
+        </nz-layout>

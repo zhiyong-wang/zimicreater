@@ -1,49 +1,73 @@
-<p>edit
-</p>
+ <nz-layout>
+  
 
-<div *ngIf="wordItem">
-<form>
+<nz-content style="margin:24px 16px 0;overflow: initial;width:200px;min-height: 480px">
 
-	<div>
-	    <label>词条: 
-	      <input #box  [(ngModel)]="wordItem.midi"  (keyup.enter)="onKey()"  (blur)="onKey()" name="midi" required minlength="2"   #midi="ngModel"  >
-    </label>
-     <div *ngIf="midi.invalid && (midi.dirty || midi.touched)" class="alert alert-danger">
-	  <div *ngIf="midi.errors.required">
-	   midi is required.
-	  </div>{{wordItem.midi}}
-	  <div *ngIf="name.errors.minlength">
-	    midi must be at least 2 characters long.
-	  </div>
-	</div>
-	</div>
-	<div>
-	    <label>问题:
-	      <input [(ngModel)]="wordItem.question" placeholder="question" name="question" (keyup.enter)="onKey()"  (blur)="onKey()">
-	    </label>
-	</div>{{wordItem.question}}
-	<div>
-	    <label>答案:
-	      <input [(ngModel)]="wordItem.answer" placeholder="answer" name="answer" (keyup.enter)="onKey()"  (blur)="onKey()">
-	    </label>
-	</div>
-	<div>
-	    <label>标签:
-	      <ul class="" *ngIf=selectedTags>
+<form nz-form >
 
-  <li *ngFor="let tag of selectedTags" >     
-    <span class="badge" (click)="unselectTag(tag)">{{tag.tag_title}}</span>    
-  </li>
-</ul>
+<nz-form-item  >
+        <nz-form-label [nzSm]="3" [nzXs]="12" nzFor="midi" nzRequired>
+          <span>词条</span>          
+        </nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input name="midi"  [(ngModel)]="wordItem.midi"  (keyup.enter)="onKey()"  (blur)="onKey()">
+         
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="3" [nzXs]="12" nzFor="question" nzRequired>
+          <span>问题</span>          
+        </nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input name="question"     [(ngModel)]="wordItem.question" (keyup.enter)="onKey()"  (blur)="onKey()">
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="3" [nzXs]="12" nzFor="answer" nzRequired>
+          <span>答案</span>          
+        </nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" >
+          <input nz-input name="answer"     [(ngModel)]="wordItem.answer" (keyup.enter)="onKey()"  (blur)="onKey()">
+        </nz-form-control>
+    </nz-form-item>
+   
+    <nz-form-item >
+        <nz-form-label [nzSm]="3" [nzXs]="12" nzFor="tag" nzRequired >
+          <span>标签</span>          
+        </nz-form-label>
 
-	    </label>
-	</div>
-		<div class="">
-		<app-tag-list (selectTag)="selectTag($event)"></app-tag-list>
-		</div>
-     <div *ngIf="wordItem.question_id==-1"><button (click)="add()">add</button></div>
-	 <div *ngIf="wordItem.question_id>=0"><button (click)="modify()">modify</button><button (click)="delete()">delete</button></div>
-	
+
+		<ul *ngIf="selectedTags" >
+			<li *ngFor="let tag of selectedTags"  (click)="unselectTag(tag)"  style="display:inline; float:left;">
+			<div class="tag">{{tag.tag_title}}</div>
+			</li>
+		</ul>
+
+    </nz-form-item>
+
+      <nz-form-item >
+        <nz-form-control [nzSpan]="14" [nzOffset]="3"  style="text-align: right; ">
+          <button nz-button nzType="default" (click)="add()" *ngIf="wordItem.question_id==-1">add</button>
+ 		 
+ 		  <button nz-button nzType="default" (click)="modify()" *ngIf="wordItem.question_id>=0">modify</button>
+		  <button nz-button nzType="default" (click)="delete()" *ngIf="wordItem.question_id>=0">delete</button>
+
+        </nz-form-control>
+      </nz-form-item>
+
 
 </form>
-</div>
+	
+	
+</nz-content>
+
+  <nz-sider  style="background: #fff; padding:0;"> 
+     <nz-card style="width:300px;">
+      <app-tag-list (selectTag)="selectTag($event)"></app-tag-list>	
+    </nz-card>  	
+ </nz-sider>
+
+
+</nz-layout>
+
+

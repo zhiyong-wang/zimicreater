@@ -9,11 +9,14 @@ import { TagsComponent } from './tags/tags.component';
 import { QuestionsRoutingModule} from './questions.routing';
 import { TagListComponent } from './tag-list/tag-list.component';
 
+import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
+
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule ,
-    QuestionsRoutingModule
+    FormsModule,
+    QuestionsRoutingModule,
+    NgZorroAntdModule
   ],
   declarations: [
   QuestionsComponent,
@@ -21,7 +24,7 @@ import { TagListComponent } from './tag-list/tag-list.component';
   QuestionListComponent, 
   TagsComponent, 
   TagListComponent],
-  providers: [
+  providers: [{ provide: NZ_I18N, useValue: zh_CN }
 
   ],
   

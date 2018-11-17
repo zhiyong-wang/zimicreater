@@ -62,29 +62,29 @@ export class QuestionEditComponent implements OnInit {
              .subscribe(()=>{this.cleanwordItem()});
 
    }
-
   selectTag(tag:Tag):void{
-    if (this.selectedTags.find((t)=>t.tag_id==tag.tag_id)){}
-    else
-      this.selectedTags.push(tag);  
+    if (this.selectedTags.find((t)=>t.tag_id==tag.tag_id)){} 
+    else    
+      {this.selectedTags.push(tag);  }
   }
   unselectTag(tag:Tag):void{
      let i=this.selectedTags.findIndex((t)=>t==tag)
      this.selectedTags.splice(i,1)
   }
 
-   cleanwordItem(): void {
+  cleanwordItem(): void {
        location.href="../questions/wordItems/"; 
    }
 
-   setSelectedTag():void{
+  setSelectedTag():void{
      this.selectedTags=[]
      if (!(this.wordItem.tags==null)){
        let a=this.wordItem.tags.split(",")
        for (let tagId of this.wordItem.tags.split(",")) {
            if (!this.selectedTags.find((t)=>t.tag_id==Number(tagId)))
              { this.selectedTags.push(this.tags.find((t)=>t.tag_id==Number(tagId)));}   }
-      }  
+      }
+  
    }
   gettags():void{
     this.service.gettags().subscribe(tags=>{
@@ -99,9 +99,9 @@ export class QuestionEditComponent implements OnInit {
     private service: QuestionService
    )  
     {}
- ngOnInit() {
-    this.selectedTags=[];
+ ngOnInit() {    
     this.gettags();
+    this.selectedTags=[];
     this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>{
       this.selectedId=params.get('id')

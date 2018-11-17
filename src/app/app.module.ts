@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 
 import { HttpClientModule } from '@angular/common/http';
 import { AppRotingModule } from './app-roting.module';
-
+import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
 import { AppComponent } from './app.component';
 import {TianziCreaterModule } from './tianzi-creater/tianzi-creater.module'
 import {QuestionsModule } from './questions/questions.module'
@@ -24,8 +24,9 @@ import {QuestionsModule } from './questions/questions.module'
     QuestionsModule,
     TianziCreaterModule,    
     AppRotingModule,
+    NgZorroAntdModule
   ],
-  providers: [
+  providers: [{ provide: NZ_I18N, useValue: zh_CN }
 
   ],
   bootstrap: [AppComponent]
