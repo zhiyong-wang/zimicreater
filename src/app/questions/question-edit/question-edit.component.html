@@ -1,8 +1,10 @@
- <nz-layout>
   
 
-<nz-content style="margin:24px 16px 0;overflow: initial;width:200px;min-height: 480px">
+<nz-content style="margin:24px 16px 0;overflow: initial;min-height: 480px;">
 
+ <div nz-row nzType="flex" nzJustify="space-around" nzAlign="top">
+
+ <div nz-col nzSpan="16">
 <form nz-form >
 
 <nz-form-item  >
@@ -57,17 +59,23 @@
 
 
 </form>
-	
-	
+	</div>
+	 <div nz-col nzSpan="8">
+
+
+     <nz-card style="width:200px;" nzTitle="标签" [nzExtra]="extraTemplate">
+      <app-tag-list (selectTag)="selectTag($event)"></app-tag-list>	
+    <ng-template #extraTemplate>
+      <a>set</a>
+    </ng-template>
+
+    </nz-card> 
+</div>
+      </div>
+
+
 </nz-content>
 
-  <nz-sider  style="background: #fff; padding:0;"> 
-     <nz-card style="width:300px;">
-      <app-tag-list (selectTag)="selectTag($event)"></app-tag-list>	
-    </nz-card>  	
- </nz-sider>
 
-
-</nz-layout>
 
 

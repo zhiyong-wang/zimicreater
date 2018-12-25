@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
+import{BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { QuestionsComponent} from './questions.component';
 import { QuestionEditComponent } from './question-edit/question-edit.component';
@@ -16,7 +17,8 @@ import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
     CommonModule,
     FormsModule,
     QuestionsRoutingModule,
-    NgZorroAntdModule
+    NgZorroAntdModule,
+     BrowserAnimationsModule
   ],
   declarations: [
   QuestionsComponent,

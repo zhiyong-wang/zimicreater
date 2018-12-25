@@ -51,7 +51,7 @@ export class QuestionEditComponent implements OnInit {
        }          
        if(this.wordItem.midi&&this.wordItem.question&&this.wordItem.answer){
           this.service.modifywordItem(this.wordItem)
-             .subscribe(()=>{this.cleanwordItem()});
+             .subscribe(()=>{});
         }
         else{
           this.errer_message='项目填全'

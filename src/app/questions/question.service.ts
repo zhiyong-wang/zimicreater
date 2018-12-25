@@ -43,8 +43,9 @@ export class QuestionService {
 }
 
 
-  getwordItems():Observable<any[]> {
-      let Url="http://localhost:5757/weapp/question_list"
+  getwordItems(tags:String):Observable<any[]> {
+      let tUrl="http://localhost:5757/weapp/question_list"
+      let Url=`${tUrl}/${tags}`
       return this.http.get<any[]>(Url)
     
     }
