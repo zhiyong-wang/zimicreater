@@ -1,23 +1,25 @@
 <div class="box">
 
 
+<h2>横向</h2>
 <ul class="zimis">
-  <h2> 横向</h2>
+
    <li *ngFor="let zimi of zimis[0]"
      [class.selected]="zimi === selectedZimi"
     (click)="onSelect(zimi)"
    >
-   	<span class="badge">{{zimi.id}}</span> {{zimi.midi}}{{zimi.question}}
+    <span class="badge">{{zimi.id}}</span> {{zimi.midi}}---{{zimi.question}}
   </li>
 </ul>
-
-<ul class="zimis">
-   <h2>纵向</h2>
+<h2>纵向</h2>
+<ul class="zimis">   
    <li *ngFor="let zimi of zimis[1]"
      [class.selected]="zimi === selectedZimi"
-    (click)="onSelect(zimi)"
-   >
-   	<span class="badge">{{zimi.id}}</span> {{zimi.midi}}{{zimi.question}}
+    (click)="onSelect(zimi)"   >
+   	<span class="badge">{{zimi.id}}</span> {{zimi.midi}}--{{zimi.question}}
   </li>
 </ul>
 </div>
+
+
+

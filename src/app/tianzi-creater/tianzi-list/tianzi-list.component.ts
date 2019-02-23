@@ -7,12 +7,14 @@ import { Component, EventEmitter, OnInit ,Input,Output} from '@angular/core';
 })
 export class TianziListComponent implements OnInit {
     
-    @Input() tianzis:any[];    
-    @Output() selectTianzi =new EventEmitter<number>();
+    @Input() tianzis:any[]; 
+    @Input() source:string; 
+    @Output() selectTianzi =new EventEmitter<{}>();
 
-
+    
     onSelect(tianzi_id:number){
-      		this.selectTianzi.emit(tianzi_id)
+          let thing={"source":this.source,"id":tianzi_id}
+      		this.selectTianzi.emit(thing)
       } 
 
 

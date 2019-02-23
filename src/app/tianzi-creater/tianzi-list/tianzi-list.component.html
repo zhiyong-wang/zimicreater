@@ -1,6 +1,16 @@
-<h2>My Heroes</h2>
-<ul class="zimis">
-  <li *ngFor="let tianzi of tianzis" (click)="onSelect(tianzi.zimi_id)">
-    <span class="badge">{{tianzi.zimi_id}}</span>
-  </li>
-</ul>
+
+
+  <nz-list 
+    [nzDataSource]="tianzis"
+    [nzGrid]="{gutter: 8, span:6}"
+    [nzRenderItem]="item"
+    [nzPagination]="pagination">
+    <ng-template #item let-item>
+      <nz-list-item [nzContent]="nzContent"  >
+          <ng-template #nzContent ><span (click)="onSelect(item.zimi_id)"><button nz-button nzType="dashed" [nzSize]="small" >{{item.zimi_id}}</button></span></ng-template>
+      </nz-list-item>
+    </ng-template>
+    <ng-template #pagination>
+      <nz-pagination [nzPageIndex]="1" [nzTotal]="20" [nzSize]="'small'"(nzPageIndexChange)="loadData($event)"></nz-pagination>
+    </ng-template>
+  </nz-list>

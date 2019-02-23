@@ -14,7 +14,8 @@ export class ZimiCreatComponent implements OnInit {
    zimis :any[]=[];
    grids:Grid[];
    selectedGrids:number[]=[];
-   tianzis:any[]=[];
+   tianzis_tmp:any[]=[];
+   tianzis_http:any[]=[];
    tianzi_id:number=-1;
    canChange:boolean=false;  //字谜Grid是否能设置
    //从服务处取得字谜列表，分别为横向字谜，纵向字谜，和网格词组 
@@ -90,18 +91,20 @@ export class ZimiCreatComponent implements OnInit {
 
 
 //切换到临时tmp或正式https模式调出相应的字谜list
-getTianzilist(source:string):void{
-  this.source=source
-  this.zimiService.getTianzi(source).subscribe(tianzis=>{
-      this.tianzis=tianzis["data"];
+getTianzilist():void{
+  this.zimiService.getTianzi('tmp').subscribe(tianzis=>{
+      this.tianzis_tmp=tianzis["data"];
      })
-  this.selectTianzi(1)
+
+  this.zimiService.getTianzi('http').subscribe(tianzis=>{
+      this.tianzis_http=tianzis["data"];
+     })
 }
 
 //切换到createGRid模式
 creatTianzi():void{
   this.source='';
-  this.tianzis=[];
+  //this.tianzis=[];
   this.grids=[];
   this.getZimis("",0);
 }
@@ -127,9 +130,10 @@ cleanGrid():void{
         };
   this.zimis=[[],[]]
 };
-selectTianzi(id:number):void{
-    this.tianzi_id=id
-    this.getZimis(this.source,id)
+selectTianzi(tianzi:{}):void{
+    this.source=tianzi["source"]
+    this.tianzi_id=tianzi["id"]
+    this.getZimis(this.source,this.tianzi_id)
 }
 
 save():void{
@@ -147,7 +151,7 @@ cleanZimi():void{
 delete():void{ 
 
 this.zimiService.deleteZimis(this.source,this.tianzi_id)
-    .subscribe(()=>{this.getTianzilist(this.source)})
+    .subscribe(()=>{this.getTianzilist()})
 
 }
 
@@ -156,7 +160,7 @@ update():void{
   let addzimis =[ ...this.zimis[0],...this.zimis[1]]
   if (!addzimis) { return; }
   this.zimiService.addZimis('http',addzimis)
-    .subscribe(()=>{this.getTianzilist('http')})
+    .subscribe(()=>{this.getTianzilist()})
 
 
 }
@@ -176,9 +180,9 @@ constructor(
   	private zimiService:ZimiService,
   	private route: ActivatedRoute,) {
 }
-  ngOnInit() {
-    
- 	this.creatTianzi(); 
+  ngOnInit() {    
+    this.getTianzilist(); 
+   	this.creatTianzi(); 
   }
 
 }

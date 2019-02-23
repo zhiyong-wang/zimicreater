@@ -1,20 +1,20 @@
 <div *ngIf="zimi">
 
 	<div>
-	    <label>midi:
-	      <input #box  [(ngModel)]="zimi.midi"  (keyup.enter)="onKey(box.value)"  (blur)="onKey(box.value)" >
-	    </label>
+	    <label>midi:	    </label>
+	      <input nz-input  [(ngModel)]="zimi.midi"  (keyup.enter)="onKey(box.value)"  (blur)="onKey(box.value)" >
+
 	</div>
       <div><span>  {{errer_message}}</span></div>
 	<div>
-	    <label>question:
-	      <input [(ngModel)]="zimi.question" placeholder="question">
-	    </label>
+	    <label>question:	    </label>
+	      <input nz-input [(ngModel)]="zimi.question" placeholder="question">
+
 	</div>
 	<div>
-	    <label>answer:
-	      <input [(ngModel)]="zimi.answer" placeholder="answer">
-	    </label>
+	    <label>answer:	    </label>
+	      <input nz-input [(ngModel)]="zimi.answer" placeholder="answer">
+
 	</div>
 
 
