@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders,HttpParams } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { of } from 'rxjs';
@@ -43,10 +43,11 @@ export class QuestionService {
 }
 
 
-  getwordItems(tags:String):Observable<any[]> {
+  getwordItems(tags:string,page:number,peritem:number):Observable<any[]> {
       let tUrl="http://localhost:5757/weapp/question_list"
-      let Url=`${tUrl}/${tags}`
-      return this.http.get<any[]>(Url)
+      let options={ params:new HttpParams().set('tags',tags).append('page',page.toString()).append('peritem',peritem.toString())}
+      let Url=`${tUrl}`
+      return this.http.get<any[]>(Url,options)
     
     }
 

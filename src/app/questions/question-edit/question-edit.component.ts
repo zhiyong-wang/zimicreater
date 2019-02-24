@@ -91,7 +91,15 @@ export class QuestionEditComponent implements OnInit {
       this.tags=tags["data"];       
      })
      }
+  visible = false;
 
+  open(): void {
+    this.visible = true;
+  }
+
+  close(): void {
+    this.visible = false;
+  }
 
   constructor(
     private route:ActivatedRoute,

@@ -47,35 +47,36 @@
 
     </nz-form-item>
 
-      <nz-form-item >
-        <nz-form-control [nzSpan]="14" [nzOffset]="3"  style="text-align: right; ">
-          <button nz-button nzType="default" (click)="add()" *ngIf="wordItem.question_id==-1">add</button>
- 		 
- 		  <button nz-button nzType="default" (click)="modify()" *ngIf="wordItem.question_id>=0">modify</button>
-		  <button nz-button nzType="default" (click)="delete()" *ngIf="wordItem.question_id>=0">delete</button>
-
-        </nz-form-control>
-      </nz-form-item>
-
-
-</form>
+    <nz-form-item >
+      <nz-form-control [nzSpan]="14" [nzOffset]="3"  style="text-align: right; ">
+        <button nz-button nzType="default" (click)="add()" *ngIf="wordItem.question_id==-1">add</button> 		 
+   		  <button nz-button nzType="default" (click)="modify()" *ngIf="wordItem.question_id>=0">modify</button>
+  		  <button nz-button nzType="default" (click)="delete()" *ngIf="wordItem.question_id>=0">delete</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
 	</div>
-	 <div nz-col nzSpan="8">
 
+	 <div nz-col nzSpan="8">
 
      <nz-card style="width:200px;" nzTitle="标签" [nzExtra]="extraTemplate">
       <app-tag-list (selectTag)="selectTag($event)"></app-tag-list>	
+   
     <ng-template #extraTemplate>
-      <a>set</a>
+      <a (click)="open()">set</a>
+    <nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom':'53px' }"[nzMaskClosable]="false" [nzWidth]="480" [nzVisible]="visible" nzTitle="Tag Edit" (nzOnClose)="close()">
+     <app-tags ></app-tags>  
+    </nz-drawer>
+
     </ng-template>
 
     </nz-card> 
-</div>
-      </div>
+    </div>
+  </div>
 
 
 </nz-content>
 
 
 
-
+ 

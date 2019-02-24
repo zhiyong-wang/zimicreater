@@ -1,7 +1,7 @@
 /* zimisComponent's private CSS styles */
 .wrapper {
     display: grid;
-    grid-template-columns: 380px 450px 240px;
+    grid-template-columns: 380px 450px 280px;
     grid-template-rows:370px 35px  180px ;
 
 }

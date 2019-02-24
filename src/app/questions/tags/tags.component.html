@@ -1,23 +1,26 @@
-<p>tags
-</p>
-
-<form>
-
-	<div>
-	    <label>标签: 
-	      <input  [(ngModel)]="tag.tag_title"  (keyup.enter)="onKey()"  (blur)="onKey()" name="tag"   >
-    </label>
-
-	</div>
-   
-   
- 	<div *ngIf="selectedTag"><button (click)="delete()">delete</button></div>
-    <div *ngIf="selectedTag==null"><button (click)="add()">add</button></div>
-    <div ><button (click)="cancel()">cancel</button></div>
-</form>
 
 
-<div class="">
+
+
+
+<form nz-form  (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">标签:</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input [(ngModel)]="tag.tag_title"  (keyup.enter)="onKey()"  (blur)="onKey()" name="tag" id="tag">
+         </nz-form-control>
+      </nz-form-item>
+
+    <nz-form-item nz-row style="margin:18px;">
+        <nz-form-control [nzOffset]="3">
+			<button *ngIf="selectedTag" (click)="delete()" nz-button nzType="default">delete</button>
+			<button *ngIf="selectedTag==null"(click)="add()" nz-button nzType="default">add</button>
+			<button (click)="cancel()"nz-button nzType="default">cancel</button>
+        </nz-form-control>
+      </nz-form-item>
+ </form>
+
+
+    <div class="">
 <app-tag-list (selectTag)="selectTag1($event)"></app-tag-list>
 </div>
-
