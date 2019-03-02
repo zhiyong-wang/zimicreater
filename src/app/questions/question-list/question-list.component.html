@@ -2,26 +2,25 @@
  <nz-layout style="padding:24px 0; background: #fff">       
 
     <nz-sider [nzWidth]="450" style="background:#fff">
-    	  <a [routerLink]="['../wordItems']">add a new wordItem</a> 
+    	  <a [routerLink]="['../wordItems']" style="padding-left: 20px">add a new wordItem</a> 
 
         <ul nz-menu [nzMode]="'inline'" style="height:100%">  
+            
             <nz-tag *ngFor="let tag of tags" nzMode="checkable"
-              [nzChecked]="selectedTags.indexOf(tag) > -1" (nzCheckedChange)="handleChange($event, tag)">
+              [nzChecked]="selectedTags.indexOf(tag) > -1" (nzCheckedChange)="handleChange($event, tag)" style="padding-left: 20px">
               {{  tag.tag_title}}
             </nz-tag>
 
             <li nz-menu-item  *ngFor="let wordItem of wordItems" [class.selected]="wordItem.id === selectedId">
-                <a [routerLink]="[wordItem.question_id]">
-          		
-          			<span  title>{{wordItem.question_id}}</span>
+                <a [routerLink]="[wordItem.question_id]">        		
+
           			<span  title>{{wordItem.midi}}</span>--
           			<span  title>{{wordItem.question}}</span>
-          			<span  title>{{wordItem.answer}}</span>  </a>           
+                </a>           
 
-           </li>
-   
+           </li>  
      
-              <nz-pagination [nzPageIndex]="1" [nzTotal]="item_total" (nzPageIndexChange)="loadData($event)" [nzSize]="'small'" ></nz-pagination>
+            <nz-pagination [nzPageIndex]="1" [nzTotal]="item_total" (nzPageIndexChange)="loadData($event)" [nzSize]="'small'" ></nz-pagination>
 
           </ul>
      </nz-sider>

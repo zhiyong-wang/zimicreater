@@ -1,13 +1,23 @@
 <div *ngIf="tags">
 	
-<ul class="">
-  <li *ngFor="let tag of tags" 
-    [class.selected]="tag.id === selectedId"
-    (click)="onSelect(tag)">
 
 
-    <span class="badge">{{tag.tag_id}}</span>
-    <span class="badge">{{tag.tag_title}}</span>
-  </li>
-</ul>
+ <nz-list [nzDataSource]="tags" [nzRenderItem]="tag" [nzItemLayout]="'horizontal'" >
+    <ng-template #tag let-tag>
+      <nz-list-item>
+        <nz-list-item-meta
+          [nzTitle]="nzTitle" (click)="onSelect(tag)">
+          <ng-template #nzTitle >
+             {{tag.tag_title}}
+          </ng-template>
+        </nz-list-item-meta>
+      </nz-list-item>
+    </ng-template>
+  </nz-list>
+
+
+
+
 </div>
+
+

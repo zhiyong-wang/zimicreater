@@ -37,14 +37,9 @@
         <nz-form-label [nzSm]="3" [nzXs]="12" nzFor="tag" nzRequired >
           <span>标签</span>          
         </nz-form-label>
-
-
-		<ul *ngIf="selectedTags" >
-			<li *ngFor="let tag of selectedTags"  (click)="unselectTag(tag)"  style="display:inline; float:left;">
-			<div class="tag">{{tag.tag_title}}</div>
-			</li>
-		</ul>
-
+        <nz-form-control [nzSm]="14" [nzXs]="24"    *ngIf="selectedTags" >
+			     <nz-tag  [nzColor]="'cyan'"  *ngFor="let tag of selectedTags"  (click)="unselectTag(tag)"  >{{tag.tag_title}}</nz-tag>
+        </nz-form-control>
     </nz-form-item>
 
     <nz-form-item >
