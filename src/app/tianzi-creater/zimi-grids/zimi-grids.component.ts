@@ -21,6 +21,7 @@ export class ZimiGridsComponent implements OnInit {
       }
       else{
       	let zimi_index:number;
+        
       	if(grid.zimi_h!=-1||grid.zimi_z!=-1){
       		zimi_index=(grid.zimi_h!=-1?grid.zimi_h:grid.zimi_z)
       		this.selectZimi.emit(zimi_index)

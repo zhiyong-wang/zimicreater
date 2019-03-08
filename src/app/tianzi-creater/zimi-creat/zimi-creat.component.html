@@ -43,7 +43,7 @@
 </div>
 
 <div class="detail">
-<app-zimi-detail *ngIf="!canChange" [zimi]="selectedZimi" (changeGrid)="updataGrid($event)"></app-zimi-detail>
+<app-zimi-detail *ngIf="!canChange" [zimi]="selectedZimi" [grids]="grids" (changeGrid)="updataGrid($event)"></app-zimi-detail>
 </div>
 <div class="zimi">
 <app-zimi-list [zimis]="zimis" (selectZimi)="selectZimi($event)"></app-zimi-list>

@@ -3,11 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { of } from 'rxjs';
-
-
 import { Zimi } from './zimi';
 import { Grid } from './grid';
-//import { ZIMIS } from './mock-zimi';
+
 
 const httpOptions = {
 	  headers: new HttpHeaders({ 'Content-Type': 'application/json' })

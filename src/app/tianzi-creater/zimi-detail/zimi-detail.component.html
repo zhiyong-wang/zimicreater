@@ -1,22 +1,26 @@
 <div *ngIf="zimi">
 
 	<div>
-	    <label>midi:	    </label>
-	      <input nz-input  [(ngModel)]="zimi.midi"  (keyup.enter)="onKey(box.value)"  (blur)="onKey(box.value)" >
+	    <div ><span style="font-weight:bold;">词条:</span>    <nz-rate [(ngModel)]="midi_rate" style="margin-left: 30px"></nz-rate>
+          <span *ngIf="midi_rate" class="ant-rate-text">{{ midi_rate?midi_tooltips[ midi_rate - 1 ] : '' }}</span> </div>
+	    <input ng-input *ngFor="let item of midi; index as i;trackBy: trackByI" [readOnly]="!item.canchange"  [style.color]="item.canchange? 'black': 'red'" [(ngModel)]="item.nr"  maxlength="1" style="width:40px;margin-left:3px;text-align: center;">
+	     <button nz-button nzType="primary" nzSize="default" (click)="onKey()"style="margin-left:3px">ok</button>
 
 	</div>
       <div><span>  {{errer_message}}</span></div>
-	<div>
-	    <label>question:	    </label>
+      <div>
+	 <div ><span style="font-weight:bold;">问题:</span> <nz-rate [(ngModel)]="question_rate" style="margin-left: 30px"></nz-rate>
+          <span *ngIf="question_rate" class="ant-rate-text">{{ question_rate?question_tooltips[ question_rate - 1 ] : '' }}</span> </div>
 	      <input nz-input [(ngModel)]="zimi.question" placeholder="question">
 
 	</div>
 	<div>
-	    <label>answer:	    </label>
+	    <div ><span style="font-weight:bold;">答案:</span>   </div>
 	      <input nz-input [(ngModel)]="zimi.answer" placeholder="answer">
 
 	</div>
 
 
-
 </div>
+
+

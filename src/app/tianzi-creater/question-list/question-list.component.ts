@@ -11,15 +11,14 @@ import {WordItem,Tag} from '../../questions/WordItem';
 })
 export class QuestionListComponent implements OnInit {
    wordItems: WordItem[];
-   wordItem:WordItem;
    tags:Tag[];
    selectedTags:number[];
-   peritem:number=7;
+   item_count:number=7;
    item_total:number;
 
 
    getwordItems(tags:string,page:number):void{
-	  this.service.getwordItems(tags,page,this.peritem).subscribe(questions=>{
+	  this.service.getwordItems(tags,page,this.item_count).subscribe(questions=>{
       this.wordItems=questions["data"].question_list;
       this.item_total=questions["data"].question_count;
      })

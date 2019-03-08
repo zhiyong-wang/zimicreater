@@ -2,20 +2,17 @@
  <nz-layout style="padding:24px 0; background: #fff">       
 
     <nz-sider [nzWidth]="450" style="background:#fff">
-    	  <a [routerLink]="['../wordItems']" style="padding-left: 20px">add a new wordItem</a> 
+    	  <a [routerLink]="['../wordItems']" style="padding-left: 24px">add a new wordItem</a> 
 
         <ul nz-menu [nzMode]="'inline'" style="height:100%">  
-            
+            <div style="padding-left: 18px">
             <nz-tag *ngFor="let tag of tags" nzMode="checkable"
-              [nzChecked]="selectedTags.indexOf(tag) > -1" (nzCheckedChange)="handleChange($event, tag)" style="padding-left: 20px">
+              [nzChecked]="selectedTags.indexOf(tag) > -1" (nzCheckedChange)="handleChange($event, tag)" >
               {{  tag.tag_title}}
             </nz-tag>
-
+            </div>
             <li nz-menu-item  *ngFor="let wordItem of wordItems" [class.selected]="wordItem.id === selectedId">
-                <a [routerLink]="[wordItem.question_id]">        		
-
-          			<span  title>{{wordItem.midi}}</span>--
-          			<span  title>{{wordItem.question}}</span>
+                <a [routerLink]="[wordItem.question_id]">{{wordItem.midi}}--{{wordItem.question}}
                 </a>           
 
            </li>  
@@ -30,4 +27,4 @@
           	<router-outlet></router-outlet>
           </nz-content>
 
-        </nz-layout>
+        </nz-layout>5 
