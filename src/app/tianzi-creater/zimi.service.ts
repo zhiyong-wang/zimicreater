@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders,HttpParams } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { of } from 'rxjs';
@@ -19,9 +19,10 @@ const httpOptions1 = {
 @Injectable()
 export class ZimiService {	
 
-
-    private httpsUrl = 'http://localhost:5757/weapp/tianzi';
+    private Url = 'http://localhost:5757/weapp';
+    private httpsUrl = 'http://localhost:5757/weapp/tianzi_http';
     private tmpUrl = 'http://localhost:5757/weapp/tianzi_tmp';
+    private modelUrl = 'http://localhost:5757/weapp/tianzi_model';
 
 	getZimis (source:string,id:number): Observable<any[]> {
 	    let zimis_z:Zimi[]=[];
@@ -38,8 +39,8 @@ export class ZimiService {
 	    let zimis:any[]=[zimis_z,zimis_h,zimis_grids]
 	    
         if(source!=""){
-          let zimiUrl=(source=="http"?`${this.httpsUrl}/${id}`:`${this.tmpUrl}/${id}`)
-
+        //  let zimiUrl=(source=="http"?`${this.httpsUrl}/${id}`:`${this.tmpUrl}/${id}`)
+        let zimiUrl=`${this.Url}/${source}/${id}`
 	      this.http.get(zimiUrl).subscribe(data => { 
 			for(let i=0;i<data['data'].length;i++){
 				data['data'][i].id=i;	
@@ -63,6 +64,7 @@ export class ZimiService {
 		        	for(let j=0;j<data['data'][i].midi_length;j++){
 		        		if(zimis_grids[data['data'][i].zb+j*10].zimi_h!=-1){
 		        			zimis_grids[data['data'][i].zb+j*10].zimi_z=i
+		        			zimis_grids[data['data'][i].zb+j*10].value=data['data'][i].midi.charAt(j)
 		        		}
                     	else{
                     		zimis_grids[data['data'][i].zb+j*10]={
@@ -155,12 +157,11 @@ export class ZimiService {
 
     }
 
-   
 
-	getTianzi(source:string):Observable<any[]> {
-		let tianziUrl= "http://localhost:5757/weapp/tianzi_list"
-		let Url=`${tianziUrl}/${source}`
-		return this.http.get<any[]>(Url)  
+	getTianzi(source:string,page:number,peritem:number):Observable<any[]> {
+		let Url= "http://localhost:5757/weapp/tianzi_list"
+        let options={ params:new HttpParams().set('source',source).append('page',page.toString()).append('peritem',peritem.toString())}
+		return this.http.get<any[]>(Url,options)  
 
 	}
 

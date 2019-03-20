@@ -14,6 +14,7 @@ export class ZimiGridsComponent implements OnInit {
     @Input() selectedGrids: number[];
     @Output() selectGrid =new EventEmitter<Grid>();
     @Output() selectZimi =new EventEmitter<number>();
+    perZimiId:number=-100;
 
     select_grid(grid:Grid){
      if(this.canChange){
@@ -22,11 +23,17 @@ export class ZimiGridsComponent implements OnInit {
       else{
       	let zimi_index:number;
         
-      	if(grid.zimi_h!=-1||grid.zimi_z!=-1){
-      		zimi_index=(grid.zimi_h!=-1?grid.zimi_h:grid.zimi_z)
-      		this.selectZimi.emit(zimi_index)
+      	if(grid.zimi_h!=-1&&grid.zimi_z!=-1){
+          zimi_index=(grid.zimi_h!=this.perZimiId?grid.zimi_h:grid.zimi_z)
       	}
-       
+        if(grid.zimi_h!=-1&&grid.zimi_z==-1){
+          zimi_index=grid.zimi_h
+        } 
+        if(grid.zimi_h==-1&&grid.zimi_z!=-1){
+          zimi_index=grid.zimi_z
+        }
+         this.perZimiId=zimi_index
+         this.selectZimi.emit(zimi_index)      
         }
       } 
   

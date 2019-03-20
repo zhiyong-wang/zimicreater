@@ -21,8 +21,9 @@
               <nz-list-item-meta
                 [nzTitle]="nzTitle"
                 [nzDescription]="nzQuestion">
+
                 <ng-template #nzTitle>
-                  {{item.midi}}
+                 <a (click)="clickItem(item.midi)">{{item.midi}}</a>
                 </ng-template>
                 <ng-template #nzQuestion>
                   {{item.question}}

@@ -3,17 +3,34 @@
         <div class="logo">
         </div>
         <ul nz-menu [nzTheme]="'light'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed" [nzSelectable]="false">
-          <li nz-menu-item (click)="creatTianzi('')" ><span ><i nz-icon type="file"></i><span class="nav-text">Zimicreat</span></span></li>
-          <li nz-submenu>
-            <span title><i nz-icon type="user"></i><span class="nav-text">Tmp</span></span>
+
+
+
+          
+
+          <li nz-submenu  [(nzOpen)]="openMap.tianzi_model" (nzOpenChange)="openHandler('tianzi_model')" >
+            <span title><i nz-icon type="user"></i><span class="nav-text">Model</span></span>
             <ul>
-                 <app-tianzi-list [tianzis]="tianzis_tmp" [source]="'tmp'" (selectTianzi)="selectTianzi($event)"></app-tianzi-list>
+                 <app-tianzi-list [tianzis]="tianzilist['tianzi_model']" [source]="'tianzi_model'" (selectTianzi)="selectTianzi($event)" (selectPage)="selectPage($event)"></app-tianzi-list>
                      </ul>
           </li>
-          <li nz-submenu>
+
+
+
+          <li nz-submenu [(nzOpen)]="openMap.tianzi_tmp" (nzOpenChange)="openHandler('tianzi_tmp')" >
+            <span title><i nz-icon type="user"></i><span class="nav-text">Tmp</span></span>
+            <ul>
+                 <app-tianzi-list [tianzis]="tianzilist.tianzi_tmp" [source]="'tianzi_tmp'" (selectTianzi)="selectTianzi($event)" (selectPage)="selectPage($event)"></app-tianzi-list>
+                     </ul>
+          </li>
+
+
+
+
+          <li nz-submenu [(nzOpen)]="openMap.tianzi_http" (nzOpenChange)="openHandler('tianzi_http')" >
             <span title ><i nz-icon type="team"></i><span class="nav-text">Http</span></span>
             <ul>
-                <app-tianzi-list [tianzis]="tianzis_http" [source]="'http'" (selectTianzi)="selectTianzi($event)"></app-tianzi-list>
+                <app-tianzi-list [tianzis]="tianzilist.tianzi_http" [source]="'tianzi_http'" (selectTianzi)="selectTianzi($event)" (selectPage)="selectPage($event)"></app-tianzi-list>
             </ul>
           </li>
           
@@ -27,29 +44,38 @@
 <app-zimi-grids [grids]="grids" [canChange]="canChange" [selectedGrids]="selectedGrids" (selectGrid)="setZimis($event)" (selectZimi)="selectZimiindex($event)"></app-zimi-grids>
 </div>
 
-<div class="butt">
-  <div *ngIf="source==''"><button (click)="add()">add</button>
-  <button (click)="cleanGrid()">cancle</button>
-    </div>
-   <div *ngIf="source=='tmp'">
-    <button (click)="save()">save</button>
-  <button (click)="cleanZimi()">cleanZimi</button>
-    <button (click)="delete()">delete</button>
-    <button (click)="update()">update</button>    
+  <div class="butt">
+    <div *ngIf="source=='tianzi_model'">
+    <button (click)="creatTianzi('')">new</button>
+    <button (click)="add('tianzi_model')">save</button>
+    <button (click)="cleanGrid()">cancle</button>
+    <button (click)="delete('tianzi_model')">delete</button>
+    <button (click)="add('tianzi_tmp')">add to tmp</button>
+  </div>
+
+   <div *ngIf="source=='tianzi_tmp'">
+    <button (click)="update_tmp()">save</button>
+    <button (click)="cleanZimi()">cleanZimi</button>
+    <button (click)=" ('tianzi_tmp')">delete</button>
+    <button (click)="add('tianzi_http')">update</button>   
+
+      <span style="align: right">  {{searchItem}}</span>
    </div>
-   <div *ngIf="source=='http'">
+
+   <div *ngIf="source=='tianzi_http'">
     <button (click)="back()">back</button>  
    </div>
+
 </div>
 
 <div class="detail">
-<app-zimi-detail *ngIf="!canChange" [zimi]="selectedZimi" [grids]="grids" (changeGrid)="updataGrid($event)"></app-zimi-detail>
+<app-zimi-detail  #zimiDetail [zimi]="selectedZimi" [grids]="grids" (changeGrid)="updataGrid($event)"   (setSearchItem)="questionList.Changes($event)"></app-zimi-detail>
 </div>
 <div class="zimi">
 <app-zimi-list [zimis]="zimis" (selectZimi)="selectZimi($event)"></app-zimi-list>
 </div>
 <div class="list" >
-<app-question-list ></app-question-list>
+<app-question-list  #questionList (sentItem)="zimiDetail.setItem($event)"></app-question-list>
 </div>
 
 </div>

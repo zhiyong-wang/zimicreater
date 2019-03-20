@@ -20,7 +20,7 @@ export class QuestionListComponent implements OnInit {
   item_total:number;
 
    getwordItems(tags:string,page:number):void{
-	  this.service.getwordItems(tags,page,this.peritem).subscribe(questions=>{
+	  this.service.getwordItems(tags,page,this.peritem,[]).subscribe(questions=>{
       this.wordItems=questions["data"].question_list;
       this.item_total=questions["data"].question_count;
      })

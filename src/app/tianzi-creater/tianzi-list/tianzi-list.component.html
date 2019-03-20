@@ -1,16 +1,17 @@
 
-
   <nz-list 
-    [nzDataSource]="tianzis"
+    [nzDataSource]="tianzis.list"
     [nzGrid]="{gutter: 8, span:6}"
     [nzRenderItem]="item"
-    [nzPagination]="pagination">
+    [nzPagination]="pagination"
+    *ngIf="tianzis.list">
     <ng-template #item let-item>
       <nz-list-item [nzContent]="nzContent"  >
-          <ng-template #nzContent ><span (click)="onSelect(item.zimi_id)"><button nz-button nzType="dashed" [nzSize]="small" >{{item.zimi_id}}</button></span></ng-template>
+          <ng-template #nzContent ><span (click)="onSelect(item.zimi_id)"><button nz-button nzType="dashed" [nzSize]="small" [style.color]="item.zimi_id==selectId?'red':'gray'">{{item.zimi_id}}</button></span></ng-template>
       </nz-list-item>
     </ng-template>
     <ng-template #pagination>
-      <nz-pagination [nzPageIndex]="1" [nzTotal]="20" [nzSize]="'small'"(nzPageIndexChange)="loadData($event)"></nz-pagination>
+      <nz-pagination [nzPageIndex]="1" [nzTotal]="tianzis.total" [nzSize]="'small'" [nzPageSize]="8" (nzPageIndexChange)="loadData($event)"></nz-pagination>
     </ng-template>
   </nz-list>
+

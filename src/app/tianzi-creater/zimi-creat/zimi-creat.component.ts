@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Zimi } from '../zimi';
 import { ZimiService} from '../zimi.service';
 import {Grid} from '../grid';
-
 
 @Component({
   selector: 'app-zimi-creat',
@@ -14,14 +13,13 @@ export class ZimiCreatComponent implements OnInit {
    zimis :any[]=[];
    grids:Grid[];
    selectedGrids:number[]=[];
-   tianzis_tmp:any[]=[];
-   tianzis_http:any[]=[];
    tianzi_id:number=-1;
    canChange:boolean=false;  //字谜Grid是否能设置
    //从服务处取得字谜列表，分别为横向字谜，纵向字谜，和网格词组 
    source:string=""
    
-   selectedZimi: Zimi;    
+   selectedZimi: Zimi;   
+
 
   //点击zimi-listd选择当前字谜进行编辑
   selectZimi(zimi: Zimi){
@@ -65,21 +63,27 @@ export class ZimiCreatComponent implements OnInit {
    	   let zimi=this.selectedZimi
        if (zimi.zongheng==1){
        	  this.zimis[0][zimi.id].midi=newmidi
-          for(let i=zimi.zb,j=0;i<zimi.midi.length+zimi.zb;i++,j++){
-              this.grids[i].value=newmidi[j]
+          for(let i=zimi.zb,j=0;i<zimi.midi_length+zimi.zb;i++,j++){
+              if(newmidi!=""){this.grids[i].value=newmidi[j]}
+                else{if(this.zimis[1][this.grids[i].zimi_z-this.zimis[0].length]&&this.zimis[1][this.grids[i].zimi_z-this.zimis[0].length].midi!=''){}
+                     else{this.grids[i].value=''}
+              }
             }
            }
         else{
         	this.zimis[1][zimi.id-this.zimis[0].length].midi=newmidi
-        	for(let i=zimi.zb,j=0;i<zimi.midi.length*10+zimi.zb;i=i+10,j++){
-              this.grids[i].value=newmidi[j]
+        	for(let i=zimi.zb,j=0;i<zimi.midi_length*10+zimi.zb;i=i+10,j++){
+              if(newmidi!=""){this.grids[i].value=newmidi[j]}
+                else{if(this.zimis[0][this.grids[i].zimi_h]&&this.zimis[0][this.grids[i].zimi_h].value!=""){this.grids[i].value=newmidi[j]}
+                     else{this.grids[i].value=""}
             }
         }
     }
+  }
 
 //获得选择的tianzi
 	getZimis(source:string,id:number): void {
-    this.canChange=(source==""?true:false);
+    this.canChange=(source=="tianzi_model"||source==""?true:false);
     this.selectedGrids=[]
 	  this.zimiService.getZimis(source,id).subscribe(zimis=>{
       this.zimis[0]=zimis[1];
@@ -87,36 +91,37 @@ export class ZimiCreatComponent implements OnInit {
       this.grids=zimis[2];}
      )
    }
+item_count:number=8
+tianzilist:{}={"tianzi_model":{},
+               "tianzi_tmp":{},
+               "tianzi_http":{}}
 
-
-
-//切换到临时tmp或正式https模式调出相应的字谜list
-getTianzilist():void{
-  this.zimiService.getTianzi('tmp').subscribe(tianzis=>{
-      this.tianzis_tmp=tianzis["data"];
+//调出的字谜list
+getTianzilist(source:string,page:number,item_count:number):void{
+  this.zimiService.getTianzi(source,page,item_count).subscribe(tianzi=>{
+      this.tianzilist[source]={list:tianzi["data"].tianzi_list,
+                               perid:tianzi["data"].tianzi_id,
+                               total:tianzi["data"].tianzi_count}
      })
 
-  this.zimiService.getTianzi('http').subscribe(tianzis=>{
-      this.tianzis_http=tianzis["data"];
-     })
 }
+geTianzilist_first(): void {
+    for (const key in this.tianzilist) {
+      this.getTianzilist(key,1,this.item_count)
+      }
+    }
+
+
+
 
 //切换到createGRid模式
 creatTianzi():void{
-  this.source='';
-  //this.tianzis=[];
+  //this.source='';
+  //this.tianzi=[];
   this.grids=[];
   this.getZimis("",0);
 }
 
-
-//增加zimis到tmp
-add(): void {
-  let addzimis =[ ...this.zimis[0],...this.zimis[1]]
-  if (!addzimis) { return; }
-  this.zimiService.addZimis('tmp',addzimis)
-    .subscribe(()=>{this.cleanGrid()})
-}
 
 //还原Grid
 cleanGrid():void{
@@ -134,11 +139,21 @@ selectTianzi(tianzi:{}):void{
     this.source=tianzi["source"]
     this.tianzi_id=tianzi["id"]
     this.getZimis(this.source,this.tianzi_id)
+    this.selectedZimi=null
 }
 
-save():void{
+
+selectPage(tianzi:{}):void{
+    this.source=tianzi["source"]
+    let page=tianzi["page"]
+    this.getTianzilist(this.source,page,this.item_count)
+}
+
+
+
+
+update_tmp():void{
 let modifyzimis =[ ...this.zimis[0],...this.zimis[1]]
-let id=modifyzimis[0].zimi_id
 this.zimiService.modifyZimisTemp(modifyzimis,this.tianzi_id)
     .subscribe(()=>{})
 }  
@@ -148,21 +163,18 @@ cleanZimi():void{
    for(let zimi of this.zimis[1]){zimi['midi']="";zimi['question']="";zimi['answer']=""}
    for(let grid of this.grids){if(grid['value']!=null){grid['value']=""}}
 }
+
+
 delete():void{ 
-
 this.zimiService.deleteZimis(this.source,this.tianzi_id)
-    .subscribe(()=>{this.getTianzilist()})
-
+    .subscribe(()=>{this.getTianzilist(this.source,1,this.item_count)})
 }
 
-update():void{
-   
+add(source:string):void{   
   let addzimis =[ ...this.zimis[0],...this.zimis[1]]
   if (!addzimis) { return; }
-  this.zimiService.addZimis('http',addzimis)
-    .subscribe(()=>{this.getTianzilist()})
-
-
+  this.zimiService.addZimis(source,addzimis)
+    .subscribe(()=>{this.getTianzilist(this.source,1,this.item_count)})
 }
 
 back():void{
@@ -170,18 +182,42 @@ back():void{
   for (let zimi of addzimis){
      zimi.midi_length=zimi.midi.length
   }
-  this.zimiService.addZimis('tmp',addzimis)
+  this.zimiService.addZimis('tianzi_tmp',addzimis)
     .subscribe(()=>{this.delete()})
-
-
 }
+
+
+openMap = {
+    tianzi_model: true,
+    tianzi_tmp: false,
+    tianzi_http: false
+  };
+
+  openHandler(value: string): void {
+    for (const key in this.openMap) {
+      if (key !== value) {
+        this.openMap[ key ] = false;
+      }
+    }
+    this.source=value
+    this.getZimis(value,this.tianzilist[value].perid)
+    this.selectedZimi=null
+
+ };
+
+
+
+
 
 constructor(
   	private zimiService:ZimiService,
   	private route: ActivatedRoute,) {
 }
+
+
+
   ngOnInit() {    
-    this.getTianzilist(); 
+    this.geTianzilist_first()
    	this.creatTianzi(); 
   }
 
