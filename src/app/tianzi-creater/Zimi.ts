@@ -6,4 +6,6 @@ export class Zimi {
   zb:number;
   zongheng:number;
   midi_length:number;
+  difficulty:number;
+  clarity:number;
 }

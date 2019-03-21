@@ -98,7 +98,7 @@ searchItem:string[]
   setItem(item:string):void{
     for(let i in this.midi){
       if (this.midi[i].canchange){
-        this.midi[i].nr=item.charAt(i)
+        this.midi[i].nr=item.charAt(Number(i))
       }
     }
   }

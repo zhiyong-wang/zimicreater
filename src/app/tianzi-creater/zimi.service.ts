@@ -64,7 +64,7 @@ export class ZimiService {
 		        	for(let j=0;j<data['data'][i].midi_length;j++){
 		        		if(zimis_grids[data['data'][i].zb+j*10].zimi_h!=-1){
 		        			zimis_grids[data['data'][i].zb+j*10].zimi_z=i
-		        			zimis_grids[data['data'][i].zb+j*10].value=data['data'][i].midi.charAt(j)
+		        		//	zimis_grids[data['data'][i].zb+j*10].value=data['data'][i].midi.charAt(j)
 		        		}
                     	else{
                     		zimis_grids[data['data'][i].zb+j*10]={
@@ -100,7 +100,9 @@ export class ZimiService {
 					  answer:'',
 					  zb:i,
 					  zongheng:1,	
-                      midi_length:1
+                      midi_length:1,
+ 					  difficulty:1,
+					  clarity:1,                     
 					};
 	                }
 	           else{
@@ -133,7 +135,9 @@ export class ZimiService {
 						  answer:'',
 						  zb:j*10+i,
 						  zongheng:0,
-						  midi_length:1
+						  midi_length:1,
+						  difficulty:1,
+						  clarity:1,
 						};
 		                  
 						  }

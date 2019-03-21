@@ -38,11 +38,12 @@ export class ZimiCreatComponent implements OnInit {
     };
    //点击grid通过grid的zimi_id选择当前字谜
     selectZimiindex(i:number){
-      if(i<this.zimis[0].length){
+     if(i>=0){
+     if(i<this.zimis[0].length){
       	this.selectZimi(this.zimis[0][i])}
       else{
       	this.selectZimi(this.zimis[1][i-this.zimis[0].length])
-      }	
+      }	}
     }
    //设置grid同时改变字谜模板
    setZimis(grid:Grid){
@@ -91,6 +92,8 @@ export class ZimiCreatComponent implements OnInit {
       this.grids=zimis[2];}
      )
    }
+
+
 item_count:number=8
 tianzilist:{}={"tianzi_model":{},
                "tianzi_tmp":{},
