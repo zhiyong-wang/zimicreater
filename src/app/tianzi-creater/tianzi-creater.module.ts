@@ -11,16 +11,15 @@ import { ZimiGridsComponent } from './zimi-grids/zimi-grids.component';
 import { ZimiCreatComponent } from './zimi-creat/zimi-creat.component';
 import { TianziListComponent } from './tianzi-list/tianzi-list.component';
 import {QuestionListComponent }from './question-list/question-list.component';
-
 import { QuestionService } from '../questions/question.service'
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule, 
     HttpClientModule,
-    NgZorroAntdModule 
-      
+    NgZorroAntdModule,
   ],
   declarations: [
     ZimiDetailComponent,
@@ -28,7 +27,7 @@ import { QuestionService } from '../questions/question.service'
     ZimiGridsComponent,
     ZimiCreatComponent,
     TianziListComponent,
-QuestionListComponent ,
+    QuestionListComponent ,
   ],
 
   providers: [

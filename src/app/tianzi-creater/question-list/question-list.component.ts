@@ -4,7 +4,8 @@ import { Component, EventEmitter,  OnInit,Input,Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { QuestionService } from '../../questions/question.service'
-import {WordItem,Tag} from '../../questions/WordItem';
+import { WordItem,Tag} from '../../questions/WordItem';
+
 
 @Component({
   selector: 'app-question-list',
@@ -12,7 +13,6 @@ import {WordItem,Tag} from '../../questions/WordItem';
   styleUrls: ['./question-list.component.css']
 })
 export class QuestionListComponent implements OnInit {
-
 
    searchItem: string[]=[];
 
@@ -48,34 +48,47 @@ export class QuestionListComponent implements OnInit {
     loadData(page:number):void{
       this.getwordItems(this.selectedTags.join(),page,this.searchItem)
 
-
-    }
+   }
 
 
 
   Changes(searchItem:string[]):void {
-this.getwordItems(this.selectedTags.join(),1,searchItem)
+      this.getwordItems(this.selectedTags.join(),1,searchItem)
       this.searchItem=searchItem
+
   }
 
 clickItem(midi:string):void{
-
    this.sentItem.emit(midi)
-
-
 }
 
 
+
+
+//zdit
+getzditItems(){
+    console.log(this.searchItem)
+    for(let i in this.searchItem){
+       if (this.searchItem[i]==""){this.searchItem[i]="?"}
+    }
+    let zditItem=this.searchItem.join("")
+   //let item1=item.replace(/\?/g,'.{1,1}') 
+   //let  patt=new RegExp(item1);
+  // let url='/sousuo/?page='+1+'&q='+encodeURIComponent(item);    
+   let url='http://www.zdic.net/sousuo/?page='+1+'&q='+encodeURIComponent(zditItem);
+   window.open(url)
+}
+
   constructor(
-    private service: QuestionService)
+    private service: QuestionService,
+)
   {}
 
   ngOnInit() {
 
-
     this.getwordItems('',1,[]);
     this.gettags();
-   this.selectedTags=[];
+    this.selectedTags=[];
     
   }
 

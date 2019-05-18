@@ -1,45 +1,39 @@
-       
+  
+<nz-tabset>
+      <nz-tab nzTitle="本地">
 
+           <nz-list [nzDataSource]="wordItems"
+                    [nzHeader]="header"
+                    [nzRenderItem]="item" 
+                    [nzItemLayout]="'horizontal'" 
+                    [nzPagination]="pagination"
+                    [nzBordered]=true
+                    [nzSize]="'small'"
+                    *ngIf="wordItems">
+                  <ng-template #header let-header>
+                       <nz-tag *ngFor="let tag of tags" nzMode="checkable"
+                          [nzChecked]="selectedTags.indexOf(tag) > -1" (nzCheckedChange)="handleChange($event, tag)">
+                          {{  tag.tag_title}}
+                        </nz-tag>
+                 </ng-template>
 
- <nz-list [nzDataSource]="wordItems"
-          [nzHeader]="header"
-          [nzRenderItem]="item" 
-          [nzItemLayout]="'horizontal'" 
-          [nzPagination]="pagination"
-          [nzBordered]=true
-          [nzSize]="'small'"
-          *ngIf="wordItems">
-        <ng-template #header let-header>
-             <nz-tag *ngFor="let tag of tags" nzMode="checkable"
-                [nzChecked]="selectedTags.indexOf(tag) > -1" (nzCheckedChange)="handleChange($event, tag)">
-                {{  tag.tag_title}}
-              </nz-tag>
-       </ng-template>
+                    <ng-template #item let-item> <nz-list-item nz-popover  nzType="primary" [nzTitle]="item.question" [nzContent]="item.midi" (click)="clickItem(item.midi)" > </nz-list-item>
 
-          <ng-template #item let-item>
-            <nz-list-item>
-              <nz-list-item-meta
-                [nzTitle]="nzTitle"
-                [nzDescription]="nzQuestion">
+               
+              </ng-template>
 
-                <ng-template #nzTitle>
-                 <a (click)="clickItem(item.midi)">{{item.midi}}</a>
-                </ng-template>
-                <ng-template #nzQuestion>
-                  {{item.question}}
-                </ng-template>
+              <ng-template #pagination>
+                <nz-pagination [nzPageIndex]="1" [nzTotal]="item_total" (nzPageIndexChange)="loadData($event)" [nzSize]="'small'" nzSimple ></nz-pagination>
 
-        </nz-list-item-meta>
-      </nz-list-item>
-    </ng-template>
+              </ng-template>
+            </nz-list>
 
-    <ng-template #pagination>
-      <nz-pagination [nzPageIndex]="1" [nzTotal]="item_total" (nzPageIndexChange)="loadData($event)" [nzSize]="'small'" nzSimple ></nz-pagination>
+      </nz-tab>
+      <nz-tab nzTitle="网络">
 
-    </ng-template>
+          <button nz-button nzType="primary" (click)="getzditItems()">Search in Zdit</button><br />
 
+      </nz-tab>
 
-     
+    </nz-tabset>
 
-
-  </nz-list>
