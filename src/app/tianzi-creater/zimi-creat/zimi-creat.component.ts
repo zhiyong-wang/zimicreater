@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild,Output,EventEmitter} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Zimi } from '../zimi';
 import { ZimiService} from '../zimi.service';
@@ -16,10 +16,16 @@ export class ZimiCreatComponent implements OnInit {
    tianzi_id:number=-1;
    canChange:boolean=false;  //字谜Grid是否能设置
    //从服务处取得字谜列表，分别为横向字谜，纵向字谜，和网格词组 
-   source:string=""
-   
-   selectedZimi: Zimi;   
+   source:string=""   
+   selectedZimi: Zimi; 
 
+   items_tmp:Zimi[]=[]; //questionlist暂存区条目
+
+
+   saveIteminTmp(){
+     this.items_tmp=[...this.zimis[0],...this.zimis[1]]
+     console.log(this.items_tmp[0].midi)
+   }
 
   //点击zimi-listd选择当前字谜进行编辑
   selectZimi(zimi: Zimi){
@@ -106,7 +112,7 @@ getTianzilist(source:string,page:number,item_count:number):void{
                                perid:tianzi["data"].tianzi_id,
                                total:tianzi["data"].tianzi_count}
      })
-
+ this.canChange=(source=="tianzi_model"||source==""?true:false);
 }
 geTianzilist_first(): void {
     for (const key in this.tianzilist) {
@@ -170,7 +176,8 @@ cleanZimi():void{
 
 delete():void{ 
 this.zimiService.deleteZimis(this.source,this.tianzi_id)
-    .subscribe(()=>{this.getTianzilist(this.source,1,this.item_count)})
+    .subscribe(()=>{this.getTianzilist(this.source,1,this.item_count)
+      this.getZimis(this.source,this.tianzilist[this.source].perid)})
 }
 
 add(source:string):void{   
@@ -179,6 +186,23 @@ add(source:string):void{
   this.zimiService.addZimis(source,addzimis)
     .subscribe(()=>{this.getTianzilist(this.source,1,this.item_count)})
 }
+
+
+modifyTmp():void{
+ this.cleanZimi()
+ this.selectedZimi=null
+ this.selectedGrids=[]
+ this.canChange=true
+
+}
+
+cancleTmp():void{
+
+   this.getZimis('tianzi_tmp'，this.tianzilist['tianzi_tmp'].perid)
+   this.canChange=false
+
+}
+
 
 back():void{
   let addzimis =[ ...this.zimis[0],...this.zimis[1]]

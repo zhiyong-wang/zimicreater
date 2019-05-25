@@ -1,6 +1,6 @@
 
 
-import { Component, EventEmitter,  OnInit,Input,Output } from '@angular/core';
+import { Component, EventEmitter,  OnInit,Input,Output ,OnChanges} from '@angular/core';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { QuestionService } from '../../questions/question.service'
@@ -12,16 +12,20 @@ import { WordItem,Tag} from '../../questions/WordItem';
   templateUrl: './question-list.component.html',
   styleUrls: ['./question-list.component.css']
 })
-export class QuestionListComponent implements OnInit {
+export class QuestionListComponent implements OnInit,OnChanges {
 
    searchItem: string[]=[];
 
    wordItems: WordItem[];
    tags:Tag[];
    selectedTags:number[];
-   item_count:number=7;
+   item_count:number=10;
    item_total:number;
    @Output() sentItem =new EventEmitter<string>();
+
+
+   @Input() zimis_tmp:any[];
+   items_tmp:any[]
 
    getwordItems(tags:string,page:number,searchItem:string[]):void{
 	  this.service.getwordItems(tags,page,this.item_count,searchItem).subscribe(questions=>{
@@ -53,8 +57,39 @@ export class QuestionListComponent implements OnInit {
 
 
   Changes(searchItem:string[]):void {
+
       this.getwordItems(this.selectedTags.join(),1,searchItem)
       this.searchItem=searchItem
+      this.selectfromTmp()
+  }
+
+ ngOnChanges() {
+    this.items_tmp=this.zimis_tmp
+    this.selectfromTmp()
+ }
+
+  selectfromTmp():void{
+    if(this.searchItem.length==0)
+    	   {console.log("0")  }
+    else{console.log("1")
+        	this.items_tmp=[]
+				    	for (let item of this.zimis_tmp){
+				    		  let tmp=true
+				        if (this.searchItem.length==item.midi.length)
+									      for(let i in this.searchItem){
+									       if (this.searchItem[i]!=""&&this.searchItem[i]!=item.midi[i]){tmp=false}
+									      }
+									     else{tmp=false}
+           
+             if (tmp) {this.items_tmp.push(item)}
+          }
+
+    }
+
+    let zditItem=this.searchItem.join("")
+   //let item1=item.replace(/\?/g,'.{1,1}') 
+   //let  patt=new RegExp(item1);
+
 
   }
 

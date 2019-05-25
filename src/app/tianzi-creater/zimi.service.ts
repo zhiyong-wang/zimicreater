@@ -64,9 +64,10 @@ export class ZimiService {
 		        	for(let j=0;j<data['data'][i].midi_length;j++){
 		        		if(zimis_grids[data['data'][i].zb+j*10].zimi_h!=-1){
 		        			zimis_grids[data['data'][i].zb+j*10].zimi_z=i
-		        		//	zimis_grids[data['data'][i].zb+j*10].value=data['data'][i].midi.charAt(j)
-		        		}
-                    	else{
+		        			if(zimis_grids[data['data'][i].zb+j*10].value!=''){}
+		        				else{zimis_grids[data['data'][i].zb+j*10].value=data['data'][i].midi.charAt(j)}
+		        			
+		     		        		}                    	else{
                     		zimis_grids[data['data'][i].zb+j*10]={
 		                    	id:data['data'][i].zb+j*10,	
 		                    	value:	data['data'][i].midi.charAt(j),

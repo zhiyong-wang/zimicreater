@@ -53,14 +53,20 @@
     <button (click)="add('tianzi_tmp')">add to tmp</button>
   </div>
 
-   <div *ngIf="source=='tianzi_tmp'">
+   <div *ngIf="source=='tianzi_tmp'&&canChange==false">
     <button (click)="update_tmp()">save</button>
     <button (click)="cleanZimi()">cleanZimi</button>
-    <button (click)=" ('tianzi_tmp')">delete</button>
+    <button (click)=" delete('tianzi_tmp')">delete</button>
     <button (click)="add('tianzi_http')">update</button>   
-
-      <span style="align: right">  {{searchItem}}</span>
+    <button (click)="saveIteminTmp()">暂存</button> 
+    <button (click)="modifyTmp()">修改model</button> 
    </div>
+
+    <div *ngIf="source=='tianzi_tmp'&&canChange==true">
+    <button (click)="add('tianzi_tmp')">保存此模板</button>
+ <button (click)="cancleTmp()">取消</button>
+   </div>
+
 
    <div *ngIf="source=='tianzi_http'">
     <button (click)="back()">back</button>  
@@ -75,7 +81,7 @@
 <app-zimi-list [zimis]="zimis" (selectZimi)="selectZimi($event)"></app-zimi-list>
 </div>
 <div class="list" >
-<app-question-list  #questionList (sentItem)="zimiDetail.setItem($event)"></app-question-list>
+<app-question-list  #questionList [zimis_tmp]="items_tmp"   (sentItem)="zimiDetail.setItem($event)"></app-question-list>
 </div>
 
 </div>

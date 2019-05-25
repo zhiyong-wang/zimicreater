@@ -23,7 +23,7 @@
               </ng-template>
 
               <ng-template #pagination>
-                <nz-pagination [nzPageIndex]="1" [nzTotal]="item_total" (nzPageIndexChange)="loadData($event)" [nzSize]="'small'" nzSimple ></nz-pagination>
+                <nz-pagination [nzPageIndex]="1" [nzTotal]="item_total" (nzPageIndexChange)="loadData($event)" [nzSize]="'small'" ></nz-pagination>
 
               </ng-template>
             </nz-list>
@@ -33,6 +33,23 @@
 
           <button nz-button nzType="primary" (click)="getzditItems()">Search in Zdit</button><br />
 
+      </nz-tab>
+
+      <nz-tab nzTitle="暂存">
+
+                     <nz-list [nzDataSource]="items_tmp"
+                    [nzRenderItem]="item" 
+                    [nzItemLayout]="'horizontal'" 
+                    [nzBordered]=true
+                    [nzSize]="'small'"
+                    *ngIf="items_tmp">
+                  
+                    <ng-template #item let-item> <nz-list-item nz-popover  nzType="primary" [nzTitle]="item.question" [nzContent]="item.midi" (click)="clickItem(item.midi)" > </nz-list-item>
+
+               
+              </ng-template>
+
+            </nz-list>
       </nz-tab>
 
     </nz-tabset>
