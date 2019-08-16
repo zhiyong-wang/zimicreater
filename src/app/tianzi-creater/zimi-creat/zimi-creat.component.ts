@@ -198,7 +198,7 @@ modifyTmp():void{
 
 cancleTmp():void{
 
-   this.getZimis('tianzi_tmp'，this.tianzilist['tianzi_tmp'].perid)
+   this.getZimis('tianzi_tmp',this.tianzilist['tianzi_tmp'].perid)
    this.canChange=false
 
 }
@@ -206,12 +206,46 @@ cancleTmp():void{
 
 back():void{
   let addzimis =[ ...this.zimis[0],...this.zimis[1]]
-  for (let zimi of addzimis){
-     zimi.midi_length=zimi.midi.length
-  }
+//  for (let zimi of addzimis){
+//     zimi.midi_length=zimi.midi.length
+//  }
   this.zimiService.addZimis('tianzi_tmp',addzimis)
     .subscribe(()=>{this.delete()})
 }
+
+private tag:string=""
+toJson():void{
+ let zimis =[ ...this.zimis[0],...this.zimis[1]]
+     let zimi_to_server={
+         data:[],
+         rate:0,
+         zimi_id:this.tianzi_id,
+         tag:this.tag
+          }
+     for(let zimi of zimis){
+         zimi_to_server.data.push({"midi":zimi.midi,"answer":zimi.answer,"question":zimi.question,"zb":zimi.zb,"zongheng":zimi.zongheng})
+         zimi_to_server.rate=zimi_to_server.rate+(zimi.clarity*0.5+1.2)*(zimi.difficulty*0.2+1.1)*100
+     }
+    
+     var bl=JSON.stringify(zimi_to_server)
+     
+   this.saveFile(bl,"zimi_"+this.tag+this.tianzi_id+".txt");//saveAs(blob,filename)
+
+   this.zimiService.savedInServer(this.tianzi_id,zimi_to_server.tag,zimi_to_server.rate)
+       .subscribe(()=>{})
+     }  
+
+
+ saveFile(fileText,filename):void {
+    let DownloadDom = document.getElementById("Download");
+
+
+        let myBlob = new Blob([fileText], { type: "application/json" });
+        DownloadDom['href'] = window.URL.createObjectURL(myBlob);
+        DownloadDom['download']=filename
+
+}
+
 
 
 openMap = {
@@ -231,7 +265,6 @@ openMap = {
     this.selectedZimi=null
 
  };
-
 
 
 

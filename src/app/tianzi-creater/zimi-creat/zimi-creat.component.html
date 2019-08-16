@@ -2,11 +2,7 @@
       <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzBreakpoint]="'lg'">
         <div class="logo">
         </div>
-        <ul nz-menu [nzTheme]="'light'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed" [nzSelectable]="false">
-
-
-
-          
+        <ul nz-menu [nzTheme]="'light'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed" [nzSelectable]="false">          
 
           <li nz-submenu  [(nzOpen)]="openMap.tianzi_model" (nzOpenChange)="openHandler('tianzi_model')" >
             <span title><i nz-icon type="user"></i><span class="nav-text">Model</span></span>
@@ -15,17 +11,12 @@
                      </ul>
           </li>
 
-
-
           <li nz-submenu [(nzOpen)]="openMap.tianzi_tmp" (nzOpenChange)="openHandler('tianzi_tmp')" >
             <span title><i nz-icon type="user"></i><span class="nav-text">Tmp</span></span>
             <ul>
                  <app-tianzi-list [tianzis]="tianzilist.tianzi_tmp" [source]="'tianzi_tmp'" (selectTianzi)="selectTianzi($event)" (selectPage)="selectPage($event)"></app-tianzi-list>
                      </ul>
           </li>
-
-
-
 
           <li nz-submenu [(nzOpen)]="openMap.tianzi_http" (nzOpenChange)="openHandler('tianzi_http')" >
             <span title ><i nz-icon type="team"></i><span class="nav-text">Http</span></span>
@@ -64,12 +55,14 @@
 
     <div *ngIf="source=='tianzi_tmp'&&canChange==true">
     <button (click)="add('tianzi_tmp')">保存此模板</button>
- <button (click)="cancleTmp()">取消</button>
+    <button (click)="cancleTmp()">取消</button>
    </div>
 
 
    <div *ngIf="source=='tianzi_http'">
-    <button (click)="back()">back</button>  
+    <button (click)="back()">back</button>
+    <a download="a.txt" id="Download"> <button (click)="toJson()">Tofile</button></a> 
+    <input  name="tag"  [(ngModel)]="tag" >
    </div>
 
 </div>

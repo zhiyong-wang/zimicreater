@@ -7,6 +7,7 @@ import { Zimi } from './zimi';
 import { Grid } from './grid';
 
 
+
 const httpOptions = {
 	  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 	};
@@ -14,7 +15,8 @@ const httpOptions = {
 const httpOptions1 = {
 	  headers: new HttpHeaders({ 'Content-Type': 'string' })
 	};
-
+const APPID="wx1c034e9511c8f70b";
+const APPSECRET="21a1160f9bfbf0c48f800506e888d57e";
 
 @Injectable()
 export class ZimiService {	
@@ -173,7 +175,7 @@ export class ZimiService {
  	addZimis (source:string,zimis:Zimi[]): Observable<{}> {
         let Url="http://localhost:5757/weapp/tianzi_add"
   		let addzimis={"source":source,"zimi":zimis}
-  		return this.http.post<{}>(Url, addzimis, httpOptions).pipe(
+  		return this.http.post<{}>(Url, addzimis,  ).pipe(
         catchError(this.handleError<Zimi>('addZimi error'))
  	 );
 
@@ -196,7 +198,18 @@ export class ZimiService {
   		return this.http.post<{}>(Url, nr, httpOptions).pipe(
         catchError(this.handleError<Zimi>('addZimi'))
  	 );
-}
+  	}
+
+    savedInServer(tianzi_id:Number,tag:String,rate:Number):Observable<{}>{
+        
+        let Url="http://localhost:5757/weapp/zimionserver_add"
+        let nr={tianzi_id:tianzi_id,tag:tag,rate:rate}
+    	return this.http.post<{}>(Url, nr, httpOptions).pipe(
+        catchError(this.handleError<string>('savedInServer'))
+ 	 );
+    }
+
+
 
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

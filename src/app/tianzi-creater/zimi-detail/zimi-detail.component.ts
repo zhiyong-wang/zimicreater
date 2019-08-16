@@ -19,9 +19,9 @@ export class ZimiDetailComponent implements OnChanges {
 
   errer_message:string=''
   midi_rate:number=1
-  midi_tooltips = [ 'terrible', 'bad', 'normal', 'good', 'wonderful' ]
+  midi_tooltips = [ '小学低年级', '小学高年级', '初中', '高中', '大学' ]
   question_rate:number=1
-  question_tooltips = [ 'terrible', 'bad', 'normal', 'good', 'wonderful' ]  
+  question_tooltips = [ '特别明确', '有清晰提示', '模糊' ]  
 
   onKey(){
     let midi_value=""
@@ -34,7 +34,7 @@ export class ZimiDetailComponent implements OnChanges {
         this.errer_message=''
        }
     else{
-     	this.errer_message='此项谜题谜底字数'
+     	this.errer_message='此项谜题谜底字数不符'
      } 
 
     }
@@ -50,7 +50,11 @@ export class ZimiDetailComponent implements OnChanges {
 
     trackByI(index: number, item: string): number 
     { return index; }
-searchItem:string[]
+
+
+    searchItem:string[]
+
+
   ngOnChanges() {
      let searchItem:string[]=[]
       this.midi=[]

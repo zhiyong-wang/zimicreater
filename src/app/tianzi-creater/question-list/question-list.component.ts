@@ -1,5 +1,3 @@
-
-
 import { Component, EventEmitter,  OnInit,Input,Output ,OnChanges} from '@angular/core';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -101,8 +99,9 @@ clickItem(midi:string):void{
 
 
 //zdit
-getzditItems(){
+getnetItems(web:string){
     console.log(this.searchItem)
+    let url
     for(let i in this.searchItem){
        if (this.searchItem[i]==""){this.searchItem[i]="?"}
     }
@@ -110,9 +109,21 @@ getzditItems(){
    //let item1=item.replace(/\?/g,'.{1,1}') 
    //let  patt=new RegExp(item1);
   // let url='/sousuo/?page='+1+'&q='+encodeURIComponent(item);    
-   let url='http://www.zdic.net/sousuo/?page='+1+'&q='+encodeURIComponent(zditItem);
+   if(web=="zdit"){url='http://www.zdic.net/sousuo/?page='+1+'&q='+encodeURIComponent(zditItem);}
+   if(web=="baidu"){url='https://dict.baidu.com/s?wd='+encodeURIComponent(zditItem);}
+   if(web=="wiki"){url='https://zh.wikipedia.org/zh/'+encodeURIComponent(zditItem);}
+   
+
+
+
    window.open(url)
 }
+
+
+
+
+
+
 
   constructor(
     private service: QuestionService,
