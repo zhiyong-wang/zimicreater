@@ -68,7 +68,7 @@
 </div>
 
 <div class="detail">
-<app-zimi-detail  #zimiDetail [zimi]="selectedZimi" [grids]="grids" (changeGrid)="updataGrid($event)"   (setSearchItem)="questionList.Changes($event)"></app-zimi-detail>
+<app-zimi-detail  #zimiDetail [zimi]="selectedZimi" [grids]="grids" (changeGrid)="updataGrid($event)"   (setSearchItem)="questionList.Changes($event)" (setmidi)="questionList.Changes_midi($event)"></app-zimi-detail>
 </div>
 <div class="zimi">
 <app-zimi-list [zimis]="zimis" (selectZimi)="selectZimi($event)"></app-zimi-list>

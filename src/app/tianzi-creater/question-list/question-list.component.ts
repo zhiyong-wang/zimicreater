@@ -19,6 +19,7 @@ export class QuestionListComponent implements OnInit,OnChanges {
    selectedTags:number[];
    item_count:number=10;
    item_total:number;
+   midi:string;
    @Output() sentItem =new EventEmitter<string>();
 
 
@@ -59,6 +60,10 @@ export class QuestionListComponent implements OnInit,OnChanges {
       this.getwordItems(this.selectedTags.join(),1,searchItem)
       this.searchItem=searchItem
       this.selectfromTmp()
+  }
+  Changes_midi(midi:string):void{
+    this.midi=midi
+
   }
 
  ngOnChanges() {
@@ -109,16 +114,25 @@ getnetItems(web:string){
    //let item1=item.replace(/\?/g,'.{1,1}') 
    //let  patt=new RegExp(item1);
   // let url='/sousuo/?page='+1+'&q='+encodeURIComponent(item);    
-   if(web=="zdit"){url='http://www.zdic.net/sousuo/?page='+1+'&q='+encodeURIComponent(zditItem);}
-   if(web=="baidu"){url='https://dict.baidu.com/s?wd='+encodeURIComponent(zditItem);}
-   if(web=="wiki"){url='https://zh.wikipedia.org/zh/'+encodeURIComponent(zditItem);}
    
-
-
-
+   if(web=="baidu"){url='https://dict.baidu.com/s?wd='+encodeURIComponent(zditItem);}
+   if(web=="guoxue"){
+     let item=zditItem.replace('?',"_")
+     url='http://www.guoxuedashi.com/zidian/so.php?sokeyci='+encodeURIComponent(item)+'&submit=&kz=13&cilen='+zditItem.length;}
+   if(web=="wiki"){url='https://zh.wikipedia.org/zh/'+encodeURIComponent(zditItem);}
    window.open(url)
 }
+getnetMidi(web:string){
+   
+    let url
+    let searchItem=this.midi
 
+   if(web=="zdit"){url='https://www.zdic.net/e/sci/index.php?field=0&classid=8&keyboard='+encodeURIComponent(searchItem);}
+   if(web=="google"){url='https://www.google.com/search?q='+encodeURIComponent(searchItem)}
+   if(web=="baidu"){url='https://www.baidu.com/s?wd='+encodeURIComponent(searchItem);}
+   if(web=="wiki"){url='https://zh.wikipedia.org/zh/'+encodeURIComponent(searchItem);}
+   window.open(url)
+}
 
 
 

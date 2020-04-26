@@ -13,7 +13,7 @@ export class ZimiDetailComponent implements OnChanges {
   @Input() grids: Grid[];
   @Output() changeGrid =new EventEmitter<string>();
   @Output() setSearchItem =new EventEmitter<string[]>();
-
+  @Output() setmidi =new EventEmitter<string>();
 
   midi:any[]=[]
 
@@ -77,6 +77,7 @@ export class ZimiDetailComponent implements OnChanges {
              }       }
          this.searchItem=searchItem
          this.setSearchItem.emit(searchItem)
+         this.setmidi.emit(this.zimi.midi)
 
   }
   }

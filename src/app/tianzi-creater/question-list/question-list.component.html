@@ -31,11 +31,20 @@
       </nz-tab>
       <nz-tab nzTitle="网络">
 
-          <button nz-button nzType="primary" (click)="getnetItems('zdit')">Search in Zdit</button><br />
+        
+          <button nz-button nzType="primary" (click)="getnetItems('baidu')">模糊查询 in 百度</button><br/>
+         <br />
+          <button nz-button nzType="primary" (click)="getnetItems('guoxue')">模糊查询 in 国学大师</button><br/>
           <br />
-          <button nz-button nzType="primary" (click)="getnetItems('baidu')">Search in BaiDu</button><br/>
-<br />
-          <button nz-button nzType="primary" (click)="getnetItems('wiki')">Search in Wiki</button><br/>
+          <br />
+        <button nz-button nzType="primary" (click)="getnetMidi('google')">精确查询 in google</button><br/>
+         <br />
+
+          <button nz-button nzType="primary" (click)="getnetMidi('baidu')">精确查询 in 百度</button><br/>
+         <br />
+          <button nz-button nzType="primary" (click)="getnetMidi('zdit')">模糊查询 in 汉典</button><br />
+          <br />
+          <button nz-button nzType="primary" (click)="getnetMidi('wiki')">精确查询 in Wiki</button><br/>
 
       </nz-tab>
 
