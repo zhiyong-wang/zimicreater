@@ -2,6 +2,9 @@ import { Component, EventEmitter, Input,Output, OnChanges } from '@angular/core'
 import { Zimi } from '../zimi';
 import {Grid} from '../grid';
 
+
+const difficulty_rate=[1,1.4,1.8,2.2,2.6]
+const clarity_rate=[1,1.2,1.4]
 @Component({
   selector: 'app-zimi-detail',
   templateUrl: './zimi-detail.component.html',
@@ -58,7 +61,8 @@ export class ZimiDetailComponent implements OnChanges {
   ngOnChanges() {
      let searchItem:string[]=[]
       this.midi=[]
-      if (this.zimi){       
+      if (this.zimi){ 
+        if(this.zimi.midi.length<this.zimi.midi_length){this.zimi.midi=""}      
         if(this.zimi.midi==""){
           
           for(let i=0;i<this.zimi.midi_length;i++){
@@ -70,7 +74,7 @@ export class ZimiDetailComponent implements OnChanges {
           
          }
         else{
-          for(let i=0;i<this.zimi.midi.split("").length;i++) {
+          for(let i=0;i<this.zimi.midi_length;i++) {
              let v=this.grids[this.zimi.zb+(this.zimi.zongheng==1?i:i*10)]
                this.midi[i]=(this.grid_canchange(v)?{"nr":this.zimi.midi.charAt(i),"canchange":true}:{"nr":this.zimi.midi.charAt(i),"canchange":false}) 
                searchItem[i]=(this.grid_canchange(v)?"":this.zimi.midi.charAt(i))  
@@ -80,6 +84,8 @@ export class ZimiDetailComponent implements OnChanges {
          this.setmidi.emit(this.zimi.midi)
 
   }
+
+
   }
   grid_canchange(grid:Grid):boolean{       
       if(this.zimi.zongheng==1){

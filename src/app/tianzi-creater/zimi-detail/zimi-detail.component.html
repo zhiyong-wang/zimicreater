@@ -10,8 +10,9 @@
 	</div>
       <div><span>  {{errer_message}}</span></div>
       <div>
-	 <div ><span style="font-weight:bold;">问题:{{ddd}}</span> <nz-rate [(ngModel)]="zimi.clarity" style="margin-left: 30px" [nzCount]=3></nz-rate>
-          <span *ngIf="zimi.clarity" class="ant-rate-text">{{ zimi.clarity?question_tooltips[ zimi.clarity - 1 ] : '' }}</span> </div>
+	 <div ><span style="font-weight:bold;">问题:{{ddd}}</span>
+		 <nz-rate [(ngModel)]="zimi.clarity" style="margin-left: 30px" [nzCount]=3></nz-rate>
+          <span *ngIf="zimi.clarity" class="ant-rate-text">{{ zimi.clarity?question_tooltips[ zimi.clarity - 1 ] : '0' }}</span> </div>
 	      <input nz-input [(ngModel)]="zimi.question" placeholder="question">
 
 	</div>

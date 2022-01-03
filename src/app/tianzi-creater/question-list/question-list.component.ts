@@ -19,7 +19,10 @@ export class QuestionListComponent implements OnInit,OnChanges {
    selectedTags:number[];
    item_count:number=10;
    item_total:number;
+   item_total_m:number;
    midi:string;
+
+   wordItems_m: string[]=[];
    @Output() sentItem =new EventEmitter<string>();
 
 
@@ -33,6 +36,19 @@ export class QuestionListComponent implements OnInit,OnChanges {
      })
  
 }
+getwordItems_m(tags:string,page:number,searchItem:string[]):void{
+
+   this.service.getwordItems_m(tags,page,this.item_count,searchItem).subscribe(questions=>{
+    this.wordItems_m=questions["data"].question_list;
+    this.item_total_m=questions["data"].question_count;
+   })
+
+}
+
+
+
+
+
   gettags():void{
     this.service.gettags().subscribe(tags=>{
       this.tags=tags["data"];       
@@ -51,13 +67,19 @@ export class QuestionListComponent implements OnInit,OnChanges {
     loadData(page:number):void{
       this.getwordItems(this.selectedTags.join(),page,this.searchItem)
 
+
    }
+   loadData_m(page:number):void{
+    this.getwordItems_m(this.selectedTags.join(),page,this.searchItem)
+
+ }
 
 
 
   Changes(searchItem:string[]):void {
 
       this.getwordItems(this.selectedTags.join(),1,searchItem)
+      this.getwordItems_m(this.selectedTags.join(),1,searchItem)
       this.searchItem=searchItem
       this.selectfromTmp()
   }
@@ -147,6 +169,7 @@ getnetMidi(web:string){
   ngOnInit() {
 
     this.getwordItems('',1,[]);
+    this.getwordItems_m('',1,[])
     this.gettags();
     this.selectedTags=[];
     

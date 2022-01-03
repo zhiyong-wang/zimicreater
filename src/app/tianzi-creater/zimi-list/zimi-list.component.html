@@ -8,7 +8,7 @@
      [class.selected]="zimi === selectedZimi"
     (click)="onSelect(zimi)"
    >
-    <span class="badge">{{zimi.id}}</span> {{zimi.answer}}-{{zimi. difficulty*zimi.clarity}}-{{zimi.question}}
+    <span class="badge">{{zimi.id}}</span> {{zimi.answer}}-{{difficulty_rate[zimi.difficulty-1]*clarity_rate[zimi.clarity-1]}}-{{zimi.question}}
   </li>
 </ul>
 <h2>纵向</h2>
@@ -16,7 +16,7 @@
    <li *ngFor="let zimi of zimis[1]"
      [class.selected]="zimi === selectedZimi"
     (click)="onSelect(zimi)"   >
-   	<span class="badge">{{zimi.id}}</span> {{zimi.answer}}-{{zimi. difficulty*zimi.clarity}}-{{zimi.question}}
+   	<span class="badge">{{zimi.id}}</span> {{zimi.answer}}-{{difficulty_rate[zimi.difficulty-1]*clarity_rate[zimi.clarity-1]}}-{{zimi.question}}
   </li>
 </ul>
 </div>

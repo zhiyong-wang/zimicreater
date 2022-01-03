@@ -31,8 +31,13 @@ background-color: black;
   color: #607d8b;
 }
 .module_selected {
-  background-color: #EEc;
+  background-color: white;
   cursor: pointer;
   color: #607d8b;
+}
+
+.module_disappear{
+  background-color:black;
+
 }
 

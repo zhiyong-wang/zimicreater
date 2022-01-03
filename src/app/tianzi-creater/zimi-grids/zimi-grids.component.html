@@ -1,7 +1,7 @@
 
 <div class="grid grid-pad">
   <a *ngFor="let grid of grids" >
-    <div class="module"  (click)="select_grid(grid)" [class.module_be]="grid.value!=null" [class.module_selected]="selectedGrids.includes(grid.id)">
+    <div class="module"   (click)="select_grid(grid)"  (dblclick)="doubleClick_grid(grid)" [class.module_be]="grid.value!=null" [class.module_selected]="selectedGrids.includes(grid.id)"  [class.module_disappear]="!grid.appear" >
       <h4>{{grid.value}}</h4>
     </div>
   </a>

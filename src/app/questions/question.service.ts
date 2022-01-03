@@ -54,6 +54,17 @@ export class QuestionService {
       return this.http.get<any[]>(Url,options)
     
     }
+    getwordItems_m(tags:string,page:number,peritem:number,searchItem:string[]):Observable<any[]> {
+      let search=""
+      for(let item of searchItem){
+         search=search+(item==""?"_":item)
+      }
+      let tUrl="http://localhost:5757/weapp/question_list_m"
+      let options={ params:new HttpParams().set('tags',tags).append('page',page.toString()).append('peritem',peritem.toString()).append('searchItem',search)}
+      let Url=`${tUrl}`
+      return this.http.get<any[]>(Url,options)
+    
+    }
 
   getwordItem(id:number|string):Observable<any>{
     let tUrl= "http://localhost:5757/weapp/question"

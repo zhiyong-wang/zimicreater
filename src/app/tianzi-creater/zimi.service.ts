@@ -8,6 +8,8 @@ import { Grid } from './grid';
 
 
 
+
+
 const httpOptions = {
 	  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 	};
@@ -36,6 +38,7 @@ export class ZimiService {
 		                    value:null,
 		                    zimi_h:-1,
 		                    zimi_z:-1,
+							appear:true
                     	     })         
         };
 	    let zimis:any[]=[zimis_z,zimis_h,zimis_grids]
@@ -44,37 +47,54 @@ export class ZimiService {
         //  let zimiUrl=(source=="http"?`${this.httpsUrl}/${id}`:`${this.tmpUrl}/${id}`)
         let zimiUrl=`${this.Url}/${source}/${id}`
 	      this.http.get(zimiUrl).subscribe(data => { 
-			for(let i=0;i<data['data'].length;i++){
-				data['data'][i].id=i;	
-				if(!data['data'][i].midi_length){
-				data['data'][i].midi_length=data['data'][i].midi.length }     
+			console.log(data)
+            let zimisOfserver=data['data'].zimi 
+			let disappear=data['data'].disappear_grids.split(",")
+			console.log(disappear) 
+			
+			for(let grid of zimis_grids){
+				if(disappear.includes(grid.id.toString())){
+				  grid.appear=false
+				  grid.value=null
+			   }
+			   else{ grid.appear=true}
+			  }
+
+
+			for(let i=0;i<zimisOfserver.length;i++){
+				zimisOfserver[i].id=i;
+
+				if(!zimisOfserver[i].midi_length){
+				zimisOfserver[i].midi_length=zimisOfserver[i].midi.length }     
 		        
 
-		        if(data['data'][i].zongheng==1){
-		        	zimis_h.push(data['data'][i]);
-		        	for(let j=0;j<data['data'][i].midi_length;j++){
-                    	zimis_grids[data['data'][i].zb+j]={
-                    	id:data['data'][i].zb+j,
-                    	value:	data['data'][i].midi.charAt(j),
+		        if(zimisOfserver[i].zongheng==1){
+		        	zimis_h.push(zimisOfserver[i]);
+		        	for(let j=0;j<zimisOfserver[i].midi_length;j++){
+                    	zimis_grids[zimisOfserver[i].zb+j]={
+                    	id:zimisOfserver[i].zb+j,
+                    	value:	zimisOfserver[i].midi.charAt(j),
                     	zimi_h:i,
                     	zimi_z:-1,
+						appear:true
                     	}
                  		}
 		      		}
                 else{
-		        	zimis_z.push(data['data'][i]);
-		        	for(let j=0;j<data['data'][i].midi_length;j++){
-		        		if(zimis_grids[data['data'][i].zb+j*10].zimi_h!=-1){
-		        			zimis_grids[data['data'][i].zb+j*10].zimi_z=i
-		        			if(zimis_grids[data['data'][i].zb+j*10].value!=''){}
-		        				else{zimis_grids[data['data'][i].zb+j*10].value=data['data'][i].midi.charAt(j)}
+		        	zimis_z.push(zimisOfserver[i]);
+		        	for(let j=0;j<zimisOfserver[i].midi_length;j++){
+		        		if(zimis_grids[zimisOfserver[i].zb+j*10].zimi_h!=-1){
+		        			zimis_grids[zimisOfserver[i].zb+j*10].zimi_z=i
+		        			if(zimis_grids[zimisOfserver[i].zb+j*10].value!=''){}
+		        				else{zimis_grids[zimisOfserver[i].zb+j*10].value=zimisOfserver[i].midi.charAt(j)}
 		        			
 		     		        		}                    	else{
-                    		zimis_grids[data['data'][i].zb+j*10]={
-		                    	id:data['data'][i].zb+j*10,	
-		                    	value:	data['data'][i].midi.charAt(j),
+                    		zimis_grids[zimisOfserver[i].zb+j*10]={
+		                    	id:zimisOfserver[i].zb+j*10,	
+		                    	value:	zimisOfserver[i].midi.charAt(j),
 		                    	zimi_h:-1,
 		                    	zimi_z:i,
+								appear:true
                     	     	}
                     	}     
                     }
@@ -172,13 +192,34 @@ export class ZimiService {
 
 	}
 
- 	addZimis (source:string,zimis:Zimi[]): Observable<{}> {
+ 	addZimis (source:string,zimis:Zimi[],disappear_grids:number[]): Observable<{}> {
         let Url="http://localhost:5757/weapp/tianzi_add"
-  		let addzimis={"source":source,"zimi":zimis}
-  		return this.http.post<{}>(Url, addzimis,  ).pipe(
+  		let addzimis={"source":source,"zimi":zimis,"disappear_grids":disappear_grids}
+  		return this.http.post<{}>(Url, addzimis).pipe(
         catchError(this.handleError<Zimi>('addZimi error'))
  	 );
 
+	}
+
+	add_appearModel(disappear_grids:number[]):Observable<{}>{
+		let Url="http://localhost:5757/weapp/disappearGrids_add"
+  		let grids={"grids":disappear_grids}
+  		return this.http.post<{}>(Url, grids  ).pipe(
+        catchError(this.handleError<Zimi>('add_appearModel error'))
+		  )
+	}
+
+	delete_appearMOdel(id:number): Observable<{}> {
+
+		let Url="http://localhost:5757/weapp/disappearGrids_delete"
+		let nr={"id":id}
+		return this.http.post<{}>(Url, nr, httpOptions).pipe(
+	  catchError(this.handleError<string>('delete_appearMOdel'))
+	);
+	}
+	getAppearGrids_list():Observable<{}>{
+		let Url= "http://localhost:5757/weapp/disappearGrids_list"
+        return this.http.get<any[]>(Url)  
 	}
 
     modifyZimisTemp (zimis:Zimi[],tianzi_id:number): Observable<{}> {

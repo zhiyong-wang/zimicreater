@@ -1,84 +1,112 @@
- <nz-layout>
-      <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzBreakpoint]="'lg'">
-        <div class="logo">
-        </div>
-        <ul nz-menu [nzTheme]="'light'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed" [nzSelectable]="false">          
+<nz-layout>
+  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzBreakpoint]="'lg'">
+    <div class="logo">
+    </div>
+    <ul nz-menu [nzTheme]="'light'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed" [nzSelectable]="false">
 
-          <li nz-submenu  [(nzOpen)]="openMap.tianzi_model" (nzOpenChange)="openHandler('tianzi_model')" >
-            <span title><i nz-icon type="user"></i><span class="nav-text">Model</span></span>
-            <ul>
-                 <app-tianzi-list [tianzis]="tianzilist['tianzi_model']" [source]="'tianzi_model'" (selectTianzi)="selectTianzi($event)" (selectPage)="selectPage($event)"></app-tianzi-list>
-                     </ul>
-          </li>
-
-          <li nz-submenu [(nzOpen)]="openMap.tianzi_tmp" (nzOpenChange)="openHandler('tianzi_tmp')" >
-            <span title><i nz-icon type="user"></i><span class="nav-text">Tmp</span></span>
-            <ul>
-                 <app-tianzi-list [tianzis]="tianzilist.tianzi_tmp" [source]="'tianzi_tmp'" (selectTianzi)="selectTianzi($event)" (selectPage)="selectPage($event)"></app-tianzi-list>
-                     </ul>
-          </li>
-
-          <li nz-submenu [(nzOpen)]="openMap.tianzi_http" (nzOpenChange)="openHandler('tianzi_http')" >
-            <span title ><i nz-icon type="team"></i><span class="nav-text">Http</span></span>
-            <ul>
-                <app-tianzi-list [tianzis]="tianzilist.tianzi_http" [source]="'tianzi_http'" (selectTianzi)="selectTianzi($event)" (selectPage)="selectPage($event)"></app-tianzi-list>
-            </ul>
-          </li>
-          
+      <li nz-submenu [(nzOpen)]="openMap.tianzi_model" (nzOpenChange)="openHandler('tianzi_model')">
+        <span title><i nz-icon type="user"></i><span class="nav-text">Model</span></span>
+        <ul>
+          <app-tianzi-list [tianzis]="tianzilist['tianzi_model']" [source]="'tianzi_model'"
+            (selectTianzi)="selectTianzi($event)" (selectPage)="selectPage($event)"></app-tianzi-list>
         </ul>
-      </nz-sider>
-<nz-content style="margin:16px;background:#fff; padding: 8px; min-height: 420px;">
+      </li>
+
+      <li nz-submenu [(nzOpen)]="openMap.tianzi_tmp" (nzOpenChange)="openHandler('tianzi_tmp')">
+        <span title><i nz-icon type="user"></i><span class="nav-text">Tmp</span></span>
+        <ul>
+          <app-tianzi-list [tianzis]="tianzilist.tianzi_tmp" [source]="'tianzi_tmp'"
+            (selectTianzi)="selectTianzi($event)" (selectPage)="selectPage($event)"></app-tianzi-list>
+        </ul>
+      </li>
+
+      <li nz-submenu [(nzOpen)]="openMap.tianzi_http" (nzOpenChange)="openHandler('tianzi_http')">
+        <span title><i nz-icon type="team"></i><span class="nav-text">Http</span></span>
+        <ul>
+          <app-tianzi-list [tianzis]="tianzilist.tianzi_http" [source]="'tianzi_http'"
+            (selectTianzi)="selectTianzi($event)" (selectPage)="selectPage($event)"></app-tianzi-list>
+        </ul>
+      </li>
+
+    </ul>
+  </nz-sider>
+  <nz-content style="margin:16px;background:#fff; padding: 8px; min-height: 420px;">
 
 
- <div class="wrapper">
-<div class="grids">
-<app-zimi-grids [grids]="grids" [canChange]="canChange" [selectedGrids]="selectedGrids" (selectGrid)="setZimis($event)" (selectZimi)="selectZimiindex($event)"></app-zimi-grids>
-</div>
+    <div class="wrapper">
+      <div class="grids">
+        <app-zimi-grids [grids]="grids" [canChange]="canChange" [selectedGrids]="selectedGrids"
+          (selectGrid)="setZimis($event)" (selectZimi)="selectZimiindex($event)"
+          (set_gridAppear)="set_gridAppear($event)"></app-zimi-grids>
+      </div>
 
-  <div class="butt">
-    <div *ngIf="source=='tianzi_model'">
-    <button (click)="creatTianzi('')">new</button>
-    <button (click)="add('tianzi_model')">save</button>
-    <button (click)="cleanGrid()">cancle</button>
-    <button (click)="delete('tianzi_model')">delete</button>
-    <button (click)="add('tianzi_tmp')">add to tmp</button>
-  </div>
+      <div class="butt">
+        <div *ngIf="source=='tianzi_model'">
+          <button (click)="creatTianzi('')">new</button>
+          <button (click)="add('tianzi_model')">save</button>
+          <button (click)="cleanGrid()">cancle</button>
+          <button (click)="delete('tianzi_model')">delete</button>
+          <button (click)="add('tianzi_tmp')">add to tmp</button>
+          <button (click)="add_appearModel()">add appear</button>
+        </div>
 
-   <div *ngIf="source=='tianzi_tmp'&&canChange==false">
-    <button (click)="update_tmp()">save</button>
-    <button (click)="cleanZimi()">cleanZimi</button>
-    <button (click)=" delete('tianzi_tmp')">delete</button>
-    <button (click)="add('tianzi_http')">update</button>   
-    <button (click)="saveIteminTmp()">暂存</button> 
-    <button (click)="modifyTmp()">修改model</button> 
-   </div>
+        <div *ngIf="source=='tianzi_tmp'&&canChange==false">
+          <button (click)="update_tmp()" *ngIf="!saving">save</button>
+          <button (click)="update_tmp()" *ngIf="saving" disabled>save</button>
+          <button (click)="cleanZimi()">cleanZimi</button>
+          <button (click)=" delete('tianzi_tmp')">delete</button>
+          <button (click)="add('tianzi_http')">update</button>
+          <button (click)="get_zimi_rate()">分值</button>
+          <button (click)="modifyTmp()">修改model</button>
+          {{zimi_rate}}
+        </div>
 
-    <div *ngIf="source=='tianzi_tmp'&&canChange==true">
-    <button (click)="add('tianzi_tmp')">保存此模板</button>
-    <button (click)="cancleTmp()">取消</button>
-   </div>
+        <div *ngIf="source=='tianzi_tmp'&&canChange==true">
+          <button (click)="update_tmp()" *ngIf="!saving">保存此模板</button>
+          <button (click)="update_tmp()" *ngIf="saving" disabled>保存此模板</button>
+          <button (click)="cancleTmp()">取消</button>
+        </div>
 
 
-   <div *ngIf="source=='tianzi_http'">
-    <button (click)="back()">back</button>
-    <a download="a.txt" id="Download"> <button (click)="toJson()">Tofile</button></a> 
-    <input  name="tag"  [(ngModel)]="tag" >
-   </div>
+        <div *ngIf="source=='tianzi_http'">
+          <button (click)="back()">back</button>
+          <a download="a.txt" id="Download"> <button (click)="toJson()">Tofile</button></a>
+          <input name="tag" [(ngModel)]="tag">
+        </div>
 
-</div>
+      </div>
+      <div class="detail" *ngIf="source=='tianzi_model'">
+          
+  <nz-list 
+  [nzDataSource]="appearGrid_list"
+  [nzGrid]="{gutter: 6, span:4}"
+  [nzRenderItem]="item"
+  [nzPagination]="pagination"
+  >
+  <ng-template #item let-item>
+    <nz-list-item [nzContent]="nzContent"  >
+        <ng-template #nzContent ><span (click)="selectAppear(item.disappear_grids)" (dblclick)="deleteAppear(item.id)"><button nz-button nzType="dashed" [nzSize]="small" [style.color]="item.id==select_AppearModel?'red':'gray'">{{item.id}}</button></span></ng-template>
+    </nz-list-item>
+  </ng-template>
+  
+</nz-list>
+      </div>
 
-<div class="detail">
-<app-zimi-detail  #zimiDetail [zimi]="selectedZimi" [grids]="grids" (changeGrid)="updataGrid($event)"   (setSearchItem)="questionList.Changes($event)" (setmidi)="questionList.Changes_midi($event)"></app-zimi-detail>
-</div>
-<div class="zimi">
-<app-zimi-list [zimis]="zimis" (selectZimi)="selectZimi($event)"></app-zimi-list>
-</div>
-<div class="list" >
-<app-question-list  #questionList [zimis_tmp]="items_tmp"   (sentItem)="zimiDetail.setItem($event)"></app-question-list>
-</div>
+      <div class="detail">
+        <app-zimi-detail #zimiDetail [zimi]="selectedZimi" [grids]="grids" (changeGrid)="updataGrid($event)"
+          (setSearchItem)="questionList.Changes($event)" (setmidi)="questionList.Changes_midi($event)">
+        </app-zimi-detail>
+      </div>
+      <div class="zimi">
+        <app-zimi-list [zimis]="zimis" (selectZimi)="selectZimi($event)"></app-zimi-list>
+      </div>
+      <div class="list">
+        <app-question-list #questionList [zimis_tmp]="items_tmp" (sentItem)="zimiDetail.setItem($event)">
+        </app-question-list>
+      </div>
 
-</div>
+    </div>
 
-</nz-content>
+  </nz-content>
 
-    </nz-layout>
+</nz-layout>

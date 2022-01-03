@@ -50,19 +50,24 @@
 
       <nz-tab nzTitle="暂存">
 
-                     <nz-list [nzDataSource]="items_tmp"
-                    [nzRenderItem]="item" 
-                    [nzItemLayout]="'horizontal'" 
-                    [nzBordered]=true
-                    [nzSize]="'small'"
-                    *ngIf="items_tmp">
-                  
-                    <ng-template #item let-item> <nz-list-item nz-popover  nzType="primary" [nzTitle]="item.question" [nzContent]="item.midi" (click)="clickItem(item.midi)" > </nz-list-item>
+        <nz-list [nzDataSource]="wordItems_m"
+        [nzHeader]="header"
+        [nzRenderItem]="item" 
+        [nzItemLayout]="'horizontal'" 
+        [nzPagination]="pagination"
+        [nzBordered]=true
+        [nzSize]="'small'"
+        *ngIf="wordItems_m">
+        <ng-template #item let-item> <nz-list-item nz-popover  nzType="primary" [nzTitle]="item.question" [nzContent]="item.midi" (click)="clickItem(item.midi)" > </nz-list-item>
 
-               
-              </ng-template>
+   
+  </ng-template>
 
-            </nz-list>
+  <ng-template #pagination>
+    <nz-pagination [nzPageIndex]="1" [nzTotal]="item_total_m" (nzPageIndexChange)="loadData_m($event)" [nzSize]="'small'" ></nz-pagination>
+
+  </ng-template>
+</nz-list>
       </nz-tab>
 
     </nz-tabset>

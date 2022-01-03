@@ -18,9 +18,13 @@ export class ZimiCreatComponent implements OnInit {
    //从服务处取得字谜列表，分别为横向字谜，纵向字谜，和网格词组 
    source:string=""   
    selectedZimi: Zimi; 
+   appearGrid_list=[]
+   select_AppearModel:number
+   disappear_grids=[]
 
    items_tmp:Zimi[]=[]; //questionlist暂存区条目
 
+ 
 
    saveIteminTmp(){
      this.items_tmp=[...this.zimis[0],...this.zimis[1]]
@@ -40,7 +44,8 @@ export class ZimiCreatComponent implements OnInit {
 	      for(let i=zimi.zb;i<zimi.zb+zimi.midi_length*10;i=i+10){
 	         this.selectedGrids.push(i)
 	      }
-	  }
+    }
+    console.log(this.selectedGrids)
     };
    //点击grid通过grid的zimi_id选择当前字谜
     selectZimiindex(i:number){
@@ -57,13 +62,46 @@ export class ZimiCreatComponent implements OnInit {
       if (grid.value!=null){
       	grid.value=null
       	}
-      else{grid.value=''
+      else{
+        if(grid.appear){
+        grid.value=''}
       	}
       this.zimiService.setZimis(this.grids).subscribe(zimis=>{
       this.zimis=zimis
+      console.log(this.zimis)
       })
 
    }
+   set_gridAppear(grid:Grid){
+     if(grid.value==null){
+     grid.appear=!grid.appear}
+   }
+   selectAppear(data:string){
+     let disappear_grids=data.split(",")
+     console.log(disappear_grids)
+     for(let grid of this.grids){
+      if(disappear_grids.includes(grid.id.toString())){
+        grid.appear=false
+        grid.value=null
+     }
+     else{ grid.appear=true}
+    }
+
+   }
+   deleteAppear(id:number){
+    var r = confirm("");
+    if (r == true) {
+       console.log(id);
+       this.zimiService.delete_appearMOdel(id)
+    .subscribe(()=>{this.getAppearGrids_list})
+    } else {
+        console.log("aaa")
+    }
+    
+   }
+
+
+
 //修改zimi
   updataGrid(newmidi:string){
 
@@ -93,13 +131,39 @@ export class ZimiCreatComponent implements OnInit {
     this.canChange=(source=="tianzi_model"||source==""?true:false);
     this.selectedGrids=[]
 	  this.zimiService.getZimis(source,id).subscribe(zimis=>{
+      console.log(zimis)
       this.zimis[0]=zimis[1];
       this.zimis[1]=zimis[0];
-      this.grids=zimis[2];}
+      this.grids=zimis[2];
+
+
+      for(let grid of this.grids){
+        if(!grid.appear){
+          this.disappear_grids.push(grid.id)
+        }
+      }
+   
+      console.log(this.zimis)
+
+      }
      )
    }
 
+  zimi_rate=0
+  
+  get_zimi_rate():void{this.zimi_rate
+      console.log(this.zimis[0])
+      this.zimi_rate=0
+      for(let zimi of this.zimis[0]){
+        this.zimi_rate=this.zimi_rate+(zimi.clarity*0.5+1.2)*(zimi.difficulty*0.2+1.1)
+      }
+      for(let zimi of this.zimis[1]){
+        this.zimi_rate=this.zimi_rate+(zimi.clarity*0.5+1.2)*(zimi.difficulty*0.2+1.1)
+        console.log(this.zimi_rate)
+      }
+      this.zimi_rate=Math.round(this.zimi_rate/(this.zimis[0].length+this.zimis[1].length)*1000)
 
+  }
 item_count:number=8
 tianzilist:{}={"tianzi_model":{},
                "tianzi_tmp":{},
@@ -121,7 +185,14 @@ geTianzilist_first(): void {
     }
 
 
-
+  getAppearGrids_list():void{
+    console.log("aaa")
+    this.zimiService.getAppearGrids_list().subscribe(appearGrids=>{
+        this.appearGrid_list=appearGrids["data"]
+        console.log(this.appearGrid_list)
+       })
+  
+  }
 
 //切换到createGRid模式
 creatTianzi():void{
@@ -129,6 +200,7 @@ creatTianzi():void{
   //this.tianzi=[];
   this.grids=[];
   this.getZimis("",0);
+  this.getAppearGrids_list()
 }
 
 
@@ -140,6 +212,7 @@ cleanGrid():void{
                         value:null,
                         zimi_h:-1,
                         zimi_z:-1,
+                        appear:true
                            }         
         };
   this.zimis=[[],[]]
@@ -159,12 +232,21 @@ selectPage(tianzi:{}):void{
 }
 
 
-
+saving:boolean=false;
 
 update_tmp():void{
+this.saving=true
 let modifyzimis =[ ...this.zimis[0],...this.zimis[1]]
+for(let zimi of modifyzimis){
+  if(zimi.midi.length<zimi.midi_length){zimi.midi=""}  
+}
+
 this.zimiService.modifyZimisTemp(modifyzimis,this.tianzi_id)
-    .subscribe(()=>{})
+    .subscribe(()=>{
+      this.canChange=false
+      this.saving=false
+    }
+    )
 }  
 
 cleanZimi():void{ 
@@ -181,15 +263,37 @@ this.zimiService.deleteZimis(this.source,this.tianzi_id)
 }
 
 add(source:string):void{   
-  let addzimis =[ ...this.zimis[0],...this.zimis[1]]
-  if (!addzimis) { return; }
-  this.zimiService.addZimis(source,addzimis)
+  let addzimis =[ ...this.zimis[0],...this.zimis[1]]     
+    let disappear_grids=[]
+    for(let grid of this.grids){
+      if(!grid.appear){
+        disappear_grids.push(grid.id)
+      }
+    }
+    if (!addzimis) { return; }
+    else{this.zimiService.addZimis(source,addzimis,disappear_grids)
     .subscribe(()=>{this.getTianzilist(this.source,1,this.item_count)})
+    }
+}
+
+add_appearModel():void{
+  let disappear_grids=[]
+    for(let grid of this.grids){
+      if(!grid.appear){
+        disappear_grids.push(grid.id)
+      }
+    }
+    if(disappear_grids.length!=0){
+      this.zimiService.add_appearModel(disappear_grids)
+      .subscribe(()=>{this.getAppearGrids_list()})
+    }
+  console.log(disappear_grids)
+
 }
 
 
 modifyTmp():void{
- this.cleanZimi()
+// this.cleanZimi()
  this.selectedZimi=null
  this.selectedGrids=[]
  this.canChange=true
@@ -209,7 +313,7 @@ back():void{
 //  for (let zimi of addzimis){
 //     zimi.midi_length=zimi.midi.length
 //  }
-  this.zimiService.addZimis('tianzi_tmp',addzimis)
+  this.zimiService.addZimis('tianzi_tmp',addzimis,this.disappear_grids)
     .subscribe(()=>{this.delete()})
 }
 
@@ -224,8 +328,9 @@ toJson():void{
           }
      for(let zimi of zimis){
          zimi_to_server.data.push({"midi":zimi.midi,"answer":zimi.answer,"question":zimi.question,"zb":zimi.zb,"zongheng":zimi.zongheng})
-         zimi_to_server.rate=zimi_to_server.rate+(zimi.clarity*0.5+1.2)*(zimi.difficulty*0.2+1.1)*100
+         zimi_to_server.rate=zimi_to_server.rate+(zimi.clarity*0.5+1.2)*(zimi.difficulty*0.2+1.1)*1000
      }
+     zimi_to_server.rate=Math.round(zimi_to_server.rate/zimis.length)
     
      var bl=JSON.stringify(zimi_to_server)
      
